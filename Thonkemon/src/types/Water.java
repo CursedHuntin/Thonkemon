@@ -1,6 +1,4 @@
-package monsters;
-
-import types.Type;
+package types;
 
 public class Water extends Type {
 

@@ -1,7 +1,7 @@
 package moves;
 
-import monsters.Water;
 import types.Magical;
+import types.Water;
 
 public class Watergun extends Move {
 

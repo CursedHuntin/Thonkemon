@@ -8,22 +8,11 @@ import moves.Heal;
 import moves.Move;
 import moves.Tackle;
 import types.Fighting;
-import types.Type;
 
 public class Krato extends Monster {
-	static String name = "Krato";
-	static Type type1 = new Fighting();
-	static Type type2 = null;
-	static int hp = 25;
-	static int atk = 10;
-	static int def = 5;
-	static int spAtk = 1;
-	static int spDef = 3;
-	static int init = 7;
-	static int catchrate = 80;
 
 	public Krato(int level) {
-		super(name, type1, type2, level, hp, atk, def, spAtk, spDef, init, catchrate);
+		super("Krato", new Fighting(), null, level, 25, 10, 5, 1, 3, 7, 80);
 		super.moveset = getMoveset();
 		super.moves = getMoves(level);
 
@@ -46,7 +35,7 @@ public class Krato extends Monster {
 	}
 
 	void setNickname(String name) {
-		Krato.name = name;
+		this.name = name;
 	}
 
 }

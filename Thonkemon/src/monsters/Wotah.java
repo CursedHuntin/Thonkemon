@@ -8,22 +8,14 @@ import moves.Heal;
 import moves.Move;
 import moves.Tackle;
 import moves.Watergun;
-import types.Type;
+import types.Water;
 
 public class Wotah extends Monster {
-	static String name = "Wotah";
-	static Type type1 = new Water();
-	static Type type2 = null;
-	static int hp = 1;
-	static int atk = 7;
-	static int def = 6;
-	static int spAtk = 8;
-	static int spDef = 7;
-	static int init = 8;
-	static int catchrate = 60;
 
 	public Wotah(int level) {
-		super(name, type1, type2, level, hp, atk, def, spAtk, spDef, init, catchrate);
+		// name, type1, type2, level, hp, atk, def, spatk, spdef, init, catch
+
+		super("Wotah", new Water(), null, level, 1, 7, 6, 8, 7, 8, 60);
 		super.moveset = getMoveset();
 		super.moves = getMoves(level);
 	}
@@ -46,6 +38,6 @@ public class Wotah extends Monster {
 	}
 
 	void setNickname(String name) {
-		Wotah.name = name;
+		this.name = name;
 	}
 }
