@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moves.Chop;
+import moves.Fireblast;
 import moves.Heal;
 import moves.Move;
 import moves.Tackle;
@@ -25,6 +26,7 @@ public class Krato extends Monster {
 		m.add(new Tackle(1));
 		m.add(new Chop(7));
 		m.add(new Heal(10, this));
+		m.add(new Fireblast(15));
 		return m;
 	}
 

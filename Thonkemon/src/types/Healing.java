@@ -1,11 +1,11 @@
 package types;
 
 import monsters.Monster;
-import statuses.AbilityStatus;
+import statuses.Status;
 
-public class Healing extends AbilityStatus {
-	int heal;
-	Monster m;
+public class Healing extends Status {
+	private int heal;
+	private Monster m;
 
 	public Healing(int heal, Monster m) {
 		super("Healing");
@@ -13,13 +13,17 @@ public class Healing extends AbilityStatus {
 		this.m = m;
 	}
 
-	public void effect() {
-		heal();
+	public void effect(Monster m) {
 	}
 
-	void heal() {
+	void heal(Monster m) {
+		System.out.println("heal()");
 		m.stats.setHp(m.stats.getHp() + heal);
 		System.out.println("You healed for " + heal + " HP");
+	}
+
+	public void applyEffect(Monster m) {
+		heal(this.m);
 	}
 
 }

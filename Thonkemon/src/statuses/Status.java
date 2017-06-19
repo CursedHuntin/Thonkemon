@@ -1,6 +1,8 @@
 package statuses;
 
-public class Status {
+import monsters.Monster;
+
+public abstract class Status {
 	public String name;
 
 	public Status(String name) {
@@ -8,6 +10,7 @@ public class Status {
 
 	}
 
-	public void effect() {
-	}
+	public abstract void effect(Monster m);
+
+	public abstract void applyEffect(Monster m);
 }

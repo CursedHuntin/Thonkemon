@@ -1,6 +1,6 @@
 package moves;
 
-import statuses.AbilityStatus;
+import statuses.Status;
 import types.Type;
 
 public class Move {
@@ -12,10 +12,10 @@ public class Move {
 	public int damage;
 	public int abilitypoints;
 	public int accuracy;
-	public AbilityStatus status;
+	public Status status;
 
 	public Move(String name, Type type, Type damageType, int level, int damage, int abilitypoints, int accuracy,
-			AbilityStatus status) {
+			Status status) {
 		this.name = name;
 		this.type = type;
 		this.damageType = damageType;

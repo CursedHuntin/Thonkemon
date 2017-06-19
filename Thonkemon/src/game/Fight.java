@@ -76,17 +76,18 @@ public class Fight {
 				for (Move move : atkPM.moves) {
 					if (move.name.equals(m)) {
 						if (move.status != null) {
-							move.status.effect();
+							move.status.applyEffect(defPM);
 						}
 
 						if (defPM.status != null)
-							defPM.status.effect();
+							defPM.status.effect(defPM);
 
 						if (hit(move) && skipTurn != true) {
 
 							// Konsolendokumentation des Kampfes + HP-Änderung
-
-							System.out.println(move.name + " did " + calculateDamage(atkPM, defPM, move) + " damage.");
+							if (move.damage > 0)
+								System.out.println(
+										move.name + " did " + calculateDamage(atkPM, defPM, move) + " damage.");
 							System.out.println(
 									atkPlayer.name + "'s " + atkPM.name + " is at " + atkPM.stats.getHp() + " HP");
 							if (defPM.stats.getHp() > calculateDamage(atkPM, defPM, move))

@@ -6,20 +6,25 @@ import monsters.Monster;
 public class Confusion extends Status {
 
 	private int turns;
-	private Monster m;
+	private int chance = 50;
 
 	public Confusion(Monster m) {
 		super("Confusion");
-		this.m = m;
-		turns = (int) (Math.random() * 3 + 1);
 	}
 
-	public void effect() {
-		confusion();
+	public void effect(Monster m) {
+		confusion(m);
+	}
+
+	public void applyEffect(Monster m) {
+		if (chance > Math.random() * 100) {
+			turns = (int) (Math.random() * 3) + 1;
+			m.status = this;
+		}
 	}
 
 	// untested
-	private void confusion() {
+	private void confusion(Monster m) {
 		if (turns > 0) {
 			System.out.println(m.name + " is confused!");
 			if (50 < (Math.random() * 100)) {
@@ -28,7 +33,9 @@ public class Confusion extends Status {
 				Fight.skipTurn = true;
 			}
 			turns--;
-		} else
+		} else {
+			System.out.println(m.name + " is no longer confused!");
 			m.status = null;
+		}
 	}
 }

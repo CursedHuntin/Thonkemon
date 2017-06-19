@@ -14,7 +14,7 @@ public class Wotah extends Monster {
 
 	public Wotah(int level) {
 		// name, type1, type2, level, hp, atk, def, spatk, spdef, init, catch
-
+		// hp = 1 zum testen ohne lange Kämpfe
 		super("Wotah", new Water(), null, level, 1, 7, 6, 8, 7, 8, 60);
 		super.moveset = getMoveset();
 		super.moves = getMoves(level);
