@@ -1,9 +1,9 @@
 package moves;
 
 import monsters.Monster;
+import statuses.StatusAttack;
 import types.Healing;
 import types.Normal;
-import types.StatusAttack;
 
 public class Heal extends Move {
 

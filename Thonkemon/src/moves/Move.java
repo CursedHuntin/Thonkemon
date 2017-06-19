@@ -1,6 +1,6 @@
 package moves;
 
-import types.AbilityStatus;
+import statuses.AbilityStatus;
 import types.Type;
 
 public class Move {

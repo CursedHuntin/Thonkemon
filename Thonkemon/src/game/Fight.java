@@ -21,6 +21,7 @@ public class Fight {
 		Monster p2M = p2.team.get(0);
 		p1c = 0;
 		p2c = 0;
+
 		while (p1.team.size() > p1c && p2.team.size() > p2c) {
 			while (p1M.stats.getHp() > 0 && p2M.stats.getHp() > 0) {
 				turn = getTurn(p1M, p2M);
@@ -82,6 +83,7 @@ public class Fight {
 							defPM.status.effect();
 
 						if (hit(move) && skipTurn != true) {
+
 							// Konsolendokumentation des Kampfes + HP-Änderung
 
 							System.out.println(move.name + " did " + calculateDamage(atkPM, defPM, move) + " damage.");
@@ -103,7 +105,7 @@ public class Fight {
 					}
 				}
 			}
-			if (k != true)
+			if (!k)
 				System.out.println("Wrong Input!");
 		}
 		turn++;
@@ -116,7 +118,7 @@ public class Fight {
 		for (Monster n : atkPlayer.team) {
 			System.out.println(n.name);
 		}
-		while (k != true) {
+		while (!k) {
 			String newMonster = StdIn.readString();
 			for (Monster n : atkPlayer.team) {
 				if (n.name.equals(newMonster) && !atkPM.name.equals(newMonster)) {
@@ -124,7 +126,7 @@ public class Fight {
 					k = true;
 				}
 			}
-			if (k != true)
+			if (!k)
 				System.out.println("Wrong Input!");
 		}
 		return atkPM;

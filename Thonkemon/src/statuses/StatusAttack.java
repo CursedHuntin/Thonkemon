@@ -1,4 +1,6 @@
-package types;
+package statuses;
+
+import types.Type;
 
 public class StatusAttack extends Type {
 

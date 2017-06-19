@@ -3,8 +3,8 @@ package monsters;
 import java.util.ArrayList;
 import java.util.List;
 
-import game.Status;
 import moves.Move;
+import statuses.Status;
 import types.Type;
 
 public class Monster {

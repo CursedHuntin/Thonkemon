@@ -1,6 +1,7 @@
 package types;
 
 import monsters.Monster;
+import statuses.AbilityStatus;
 
 public class Healing extends AbilityStatus {
 	int heal;

@@ -1,7 +1,6 @@
-package types;
+package statuses;
 
 import game.Fight;
-import game.Status;
 import monsters.Monster;
 
 public class Confusion extends Status {
@@ -16,10 +15,11 @@ public class Confusion extends Status {
 	}
 
 	public void effect() {
-
+		confusion();
 	}
 
-	private void Confusion() {
+	// untested
+	private void confusion() {
 		if (turns > 0) {
 			System.out.println(m.name + " is confused!");
 			if (50 < (Math.random() * 100)) {

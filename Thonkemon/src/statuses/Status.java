@@ -1,9 +1,9 @@
-package types;
+package statuses;
 
-public class AbilityStatus {
+public class Status {
 	public String name;
 
-	public AbilityStatus(String name) {
+	public Status(String name) {
 		this.name = name;
 
 	}

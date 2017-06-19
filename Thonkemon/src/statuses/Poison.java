@@ -1,6 +1,5 @@
-package types;
+package statuses;
 
-import game.Status;
 import monsters.Monster;
 
 public class Poison extends Status {
@@ -19,6 +18,7 @@ public class Poison extends Status {
 		poisoned();
 	}
 
+	// untested
 	private void poisoned() {
 		if (turns > 0) {
 			System.out.println(m.name + " is poisoned!");

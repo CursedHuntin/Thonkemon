@@ -1,9 +1,9 @@
-package game;
+package statuses;
 
-public class Status {
+public class AbilityStatus {
 	public String name;
 
-	public Status(String name) {
+	public AbilityStatus(String name) {
 		this.name = name;
 
 	}
