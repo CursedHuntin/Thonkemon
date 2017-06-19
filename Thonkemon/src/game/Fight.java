@@ -6,11 +6,16 @@ import moves.Move;
 import types.Type;
 
 public class Fight {
-	static int turn = 0;
-	static int p1c;
-	static int p2c;
+	static int turn;
+	private int p1c;
+	private int p2c;
+	public static boolean skipTurn;
 
-	public static void fight(Player p1, Player p2) {
+	public Fight(Player p1, Player p2) {
+		fight(p1, p2);
+	}
+
+	public void fight(Player p1, Player p2) {
 
 		Monster p1M = p1.team.get(0);
 		Monster p2M = p2.team.get(0);
@@ -30,14 +35,12 @@ public class Fight {
 		}
 	}
 
-	private static int getTurn(Monster p1m, Monster p2m) {
-		System.out.println(p1m.stats.getInit());
-		System.out.println(p2m.stats.getInit());
+	// wer greift zuerst an?
+	private int getTurn(Monster p1m, Monster p2m) {
 		return (p2m.stats.getInit() > p1m.stats.getInit() ? 1 : 0);
 	}
 
-	private static void alternatingTurns(Player p1, Player p2, Monster p1M, Monster p2M) {
-		System.out.println(turn);
+	private void alternatingTurns(Player p1, Player p2, Monster p1M, Monster p2M) {
 		if (turn % 2 == 0) {
 			playerTurn(p1, p2, p1M, p2M);
 			if (checkIfMonsterFainted(p2M))
@@ -51,17 +54,17 @@ public class Fight {
 		}
 	}
 
-	private static boolean checkIfMonsterFainted(Monster m) {
+	private boolean checkIfMonsterFainted(Monster m) {
 		return m.stats.getHp() <= 0;
 	}
 
-	private static void playerTurn(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM) {
+	private void playerTurn(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM) {
 		System.out.println(atkPlayer.name + "'s turn!");
 		System.out.println("Select Move: ");
 		for (Move move : atkPM.moves) {
 			System.out.print(move.name + " ");
 		}
-		System.out.println("Switch");
+		System.out.println("\r\nSwitch");
 		boolean k = false;
 		while (k != true) {
 			String m = StdIn.readString();
@@ -74,7 +77,13 @@ public class Fight {
 						if (move.status != null) {
 							move.status.effect();
 						}
-						if (hit(move)) {
+
+						if (defPM.status != null)
+							defPM.status.effect();
+
+						if (hit(move) && skipTurn != true) {
+							// Konsolendokumentation des Kampfes + HP-Änderung
+
 							System.out.println(move.name + " did " + calculateDamage(atkPM, defPM, move) + " damage.");
 							System.out.println(
 									atkPlayer.name + "'s " + atkPM.name + " is at " + atkPM.stats.getHp() + " HP");
@@ -98,25 +107,30 @@ public class Fight {
 				System.out.println("Wrong Input!");
 		}
 		turn++;
+		skipTurn = false;
 	}
 
-	private static Monster selectNewMonster(Player atkPlayer, Monster atkPM, String m) {
-		if (m.equals("Switch")) {
-			System.out.println("Select new Monster: ");
-			for (Monster n : atkPlayer.team) {
-				System.out.println(n.name);
-			}
+	private Monster selectNewMonster(Player atkPlayer, Monster atkPM, String m) {
+		System.out.println("Select new Monster: ");
+		boolean k = false;
+		for (Monster n : atkPlayer.team) {
+			System.out.println(n.name);
+		}
+		while (k != true) {
 			String newMonster = StdIn.readString();
 			for (Monster n : atkPlayer.team) {
-				if (n.name.equals(newMonster)) {
+				if (n.name.equals(newMonster) && !atkPM.name.equals(newMonster)) {
 					atkPM = switchMon(atkPlayer, atkPM, n.name);
+					k = true;
 				}
 			}
+			if (k != true)
+				System.out.println("Wrong Input!");
 		}
 		return atkPM;
 	}
 
-	private static Monster checkIfP1Fainted(Player p1, Monster p1M, Player p2) {
+	private Monster checkIfP1Fainted(Player p1, Monster p1M, Player p2) {
 		p1c++;
 		if (p1c < p1.team.size()) {
 			System.out.println(p1.name + "'s " + p1M.name + " fainted.");
@@ -129,7 +143,7 @@ public class Fight {
 		return p1M;
 	}
 
-	private static Monster checkIfP2Fainted(Player p2, Monster p2M, Player p1) {
+	private Monster checkIfP2Fainted(Player p2, Monster p2M, Player p1) {
 		p2c++;
 		if (p2c < p2.team.size()) {
 			System.out.println(p2.name + "'s " + p2M.name + " fainted.");
@@ -142,10 +156,11 @@ public class Fight {
 		return p2M;
 	}
 
-	private static int calculateDamage(Monster a, Monster b, Move m) {
+	private int calculateDamage(Monster a, Monster b, Move m) {
 		if (m.damage == 0)
 			return 0;
 		double userAtk, oppDef;
+		// Schadenskalkulation nach physischem oder magischem Schaden
 		if (m.damageType.name.equals("Physical")) {
 			userAtk = (2 * a.stats.getLevel() + 10) * a.stats.getAtk() * m.damage;
 			oppDef = 250 * b.stats.getDef();
@@ -158,47 +173,33 @@ public class Fight {
 
 	}
 
-	private static boolean catchMon(Player p, Monster m, Ball b) {
+	private boolean catchMon(Player p, Monster m, Ball b) {
 		if (p.team.size() < 6)
 			return ((m.stats.getCatchrate() + b.catchrate) / 2) > (Math.random() * 100);
 		else {
-			System.out.println("You're team is already full!");
+			System.out.println("Your team is already full!");
 			return false;
 		}
 	}
 
-	private static void monCought(Player p, Monster m) {
+	private void monCought(Player p, Monster m) {
 		p.addMonsterToTeam(p.team, m);
 	}
 
-	private static Monster switchMon(Player p, Monster active, String nextMon) {
+	private Monster switchMon(Player p, Monster active, String nextMon) {
 		for (Monster m : p.team) {
-			if (m.name.equals(nextMon))
+			if (m.name.equals(nextMon)) {
+				System.out.println(p.name + " switched to " + nextMon);
 				return m;
+			}
 		}
+		System.out.println("Didn't switch!");
 		return active;
 	}
 
-	static void playerTurnUI(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, String m) {
-		for (Move move : atkPM.moves) {
-			if (move.name.equals(m)) {
-				if (move.status != null) {
-					move.status.effect();
-				}
-				System.out.println(move.name + " did " + calculateDamage(atkPM, defPM, move) + " damage.");
-				System.out.println(atkPlayer.name + "'s " + atkPM.name + " is at " + atkPM.stats.getHp() + " HP");
-				if (defPM.stats.getHp() > calculateDamage(atkPM, defPM, move))
-					System.out.println(defPlayer.name + "'s " + defPM.name + " is at "
-							+ (defPM.stats.getHp() - calculateDamage(atkPM, defPM, move)) + " HP." + "\r\n");
-				defPM.stats.setHp(defPM.stats.getHp() - calculateDamage(atkPM, defPM, move));
-			}
-		}
-		turn++;
-	}
-
-	private static boolean hit(Move m) {
+	private boolean hit(Move m) {
 		boolean hit = true;
-		if ((Math.random() * 100 > m.accuracy))
+		if ((Math.random() * 100) > m.accuracy)
 			hit = false;
 		return hit;
 	}

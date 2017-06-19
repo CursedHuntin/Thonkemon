@@ -8,6 +8,6 @@ public class Status {
 
 	}
 
-	void effect() {
+	public void effect() {
 	}
 }

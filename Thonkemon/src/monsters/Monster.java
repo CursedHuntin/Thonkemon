@@ -3,6 +3,7 @@ package monsters;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.Status;
 import moves.Move;
 import types.Type;
 
@@ -11,6 +12,7 @@ public class Monster {
 	public List<Move> moveset = new ArrayList<Move>();
 	public List<Move> moves = new ArrayList<Move>();
 	public Stats stats;
+	public Status status;
 
 	public Monster(String name, Type type1, Type type2, int level, int maxHP, int atk, int def, int spAtk, int spDef,
 			int init, int catchrate) {
