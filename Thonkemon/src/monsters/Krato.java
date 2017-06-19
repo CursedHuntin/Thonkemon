@@ -12,6 +12,8 @@ import types.Fighting;
 public class Krato extends Monster {
 
 	public Krato(int level) {
+		// name, type1, type2, level, hp, atk, def, spatk, spdef, init, catch
+
 		super("Krato", new Fighting(), null, level, 25, 10, 5, 1, 3, 7, 80);
 		super.moveset = getMoveset();
 		super.moves = getMoves(level);
