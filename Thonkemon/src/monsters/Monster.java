@@ -7,7 +7,7 @@ import moves.Move;
 import statuses.Status;
 import types.Type;
 
-public class Monster {
+public abstract class Monster {
 	public String name;
 	public List<Move> moveset = new ArrayList<Move>();
 	public List<Move> moves = new ArrayList<Move>();
@@ -22,11 +22,11 @@ public class Monster {
 
 	}
 
-	List<Move> getMoveset() {
-		return null;
-	}
+	abstract List<Move> getMoveset();
 
-	List<Move> getMoves(int level) {
-		return null;
+	abstract List<Move> getMoves(int level);
+
+	void setNickname(String name) {
+		this.name = name;
 	}
 }

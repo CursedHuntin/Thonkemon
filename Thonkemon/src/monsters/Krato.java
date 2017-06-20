@@ -37,9 +37,4 @@ public class Krato extends Monster {
 		}
 		return moves;
 	}
-
-	void setNickname(String name) {
-		this.name = name;
-	}
-
 }

@@ -1,6 +1,6 @@
 package game;
 
-import items.Ball;
+import items.balls.Ball;
 import monsters.Monster;
 import moves.Move;
 import types.Type;

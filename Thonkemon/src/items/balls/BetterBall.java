@@ -1,4 +1,4 @@
-package items;
+package items.balls;
 
 public class BetterBall extends Ball {
 
