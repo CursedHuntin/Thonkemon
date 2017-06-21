@@ -8,6 +8,7 @@ import items.balls.Ball;
 import monsters.Buhrn;
 import monsters.Krato;
 import monsters.Monster;
+import monsters.Stats;
 import monsters.Wotah;
 import moves.Move;
 import types.Type;
@@ -257,13 +258,19 @@ public class Fight {
 	}
 
 	private void randomEncounter(Player p) {
+		Player p2 = createRandomMonster();
+		fight(p, p2);
+	}
+
+	private Player createRandomMonster() {
 		int level = (int) (Math.random() * 99) + 1;
-		int m = (int) Math.random() * (createMonsters().size() - 1);
+		int m = (int) (Math.random() * (createMonsters().size()));
 		Monster mon = createMonsters().get(m);
 		mon.stats.setLevel(level);
-		System.out.println(mon.stats.getLevel());
+		mon.stats = new Stats(mon.types, level, mon.initStats);
+		mon = new Monster(mon.name, mon.types, level, mon.initStats, mon.moveset);
 		Player p2 = new Player(mon.name, mon);
-		fight(p, p2);
+		return p2;
 	}
 
 	private List<Monster> createMonsters() {
@@ -272,5 +279,9 @@ public class Fight {
 		monster.add(new Krato(0));
 		monster.add(new Buhrn(0));
 		return monster;
+	}
+
+	private Move getRandomMove(Monster m) {
+		return m.moves.get((int) (Math.random() * m.moves.size()));
 	}
 }
