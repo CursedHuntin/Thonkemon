@@ -91,13 +91,18 @@ public class Fight {
 				selectItem(atkPlayer, atkPM);
 				k = true;
 			} else {
-				k = executeMove(atkPlayer, defPlayer, atkPM, defPM, k, m);
+				executeMove(atkPlayer, defPlayer, atkPM, defPM, m);
+				k = true;
 			}
 			if (!k)
 				System.out.println("Select proper Command!");
 		}
 		turn++;
 		skipTurn = false;
+	}
+
+	private void botTurn(Player bot, Player p, Monster botMon, Monster pMon) {
+		executeMove(bot, p, botMon, pMon, getRandomMove(botMon).name);
 	}
 
 	private void selectItem(Player atkPlayer, Monster atkPM) {
@@ -124,7 +129,7 @@ public class Fight {
 		}
 	}
 
-	private boolean executeMove(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, boolean k, String m) {
+	private void executeMove(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, String m) {
 		for (Move move : atkPM.moves) {
 			if (move.name.equals(m)) {
 				if (hit(move) && skipTurn != true) {
@@ -132,10 +137,8 @@ public class Fight {
 				} else {
 					onMoveMissed(atkPlayer, defPlayer, atkPM, defPM, move);
 				}
-				k = true;
 			}
 		}
-		return k;
 	}
 
 	private void printSelection(Monster atkPM) {
