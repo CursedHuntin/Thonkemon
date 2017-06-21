@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
+import monsters.Buhrn;
 import monsters.Krato;
 import monsters.Monster;
 import monsters.Wotah;
@@ -30,6 +31,7 @@ public class Player {
 		List<Monster> team = new ArrayList<Monster>();
 		team.add(new Wotah(50));
 		team.add(new Krato(50));
+		team.add(new Buhrn(50));
 		return team;
 	}
 

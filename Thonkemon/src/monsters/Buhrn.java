@@ -14,6 +14,8 @@ public class Buhrn extends Monster {
 		// name, type1, type2, level, hp, atk, def, spatk, spdef, init, catch
 
 		super("Buhrn", new Fire(), null, level, 22, 2, 5, 10, 6, 10, 60);
+		super.moveset = getMoveset();
+		super.moves = getMoves(level);
 	}
 
 	@Override
