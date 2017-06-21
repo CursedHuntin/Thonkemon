@@ -1,7 +1,14 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import items.Item;
 import items.balls.Ball;
+import monsters.Buhrn;
+import monsters.Krato;
 import monsters.Monster;
+import monsters.Wotah;
 import moves.Move;
 import types.Type;
 
@@ -13,13 +20,18 @@ public class Fight {
 		fight(p1, p2);
 	}
 
-	public void fight(Player p1, Player p2) {
+	public Fight(Player p) {
+		randomEncounter(p);
+	}
 
+	public void fight(Player p1, Player p2) {
 		Monster p1M = p1.team.get(0);
 		Monster p2M = p2.team.get(0);
 
 		while (!checkIfTeamHasNoHP(p1) && !checkIfTeamHasNoHP(p2)) {
 			while (p1M.stats.getHp() > 0 && p2M.stats.getHp() > 0) {
+				p1M = p1.team.get(0);
+				p2M = p2.team.get(0);
 				turn = getTurn(p1M, p2M);
 				alternatingTurns(p1, p2, p1M, p2M);
 
@@ -37,7 +49,6 @@ public class Fight {
 					return;
 				}
 			}
-			System.out.println("ZULUL");
 		}
 	}
 
@@ -51,11 +62,13 @@ public class Fight {
 			playerTurn(p1, p2, p1M, p2M);
 			if (checkIfMonsterFainted(p2M))
 				return;
+			p1M = p1.team.get(0);
 			playerTurn(p2, p1, p2M, p1M);
 		} else {
 			playerTurn(p2, p1, p2M, p1M);
 			if (checkIfMonsterFainted(p1M))
 				return;
+			p2M = p2.team.get(0);
 			playerTurn(p1, p2, p1M, p2M);
 		}
 	}
@@ -70,17 +83,45 @@ public class Fight {
 		boolean k = false;
 		while (k != true) {
 			String m = StdIn.readString();
-			if (m.equals("Switch")) {
-				atkPM = selectNewMonster(atkPlayer, atkPM, m);
+			if (m.equalsIgnoreCase("switch")) {
+				atkPM = selectNewMonster(atkPlayer, atkPM);
+				k = true;
+
+			} else if (m.equalsIgnoreCase("item")) {
+				selectItem(atkPlayer, atkPM);
 				k = true;
 			} else {
 				k = executeMove(atkPlayer, defPlayer, atkPM, defPM, k, m);
 			}
 			if (!k)
-				System.out.println("Wrong Input!1");
+				System.out.println("Select proper Command!");
 		}
 		turn++;
 		skipTurn = false;
+	}
+
+	private void selectItem(Player atkPlayer, Monster atkPM) {
+		for (Item item : atkPlayer.items) {
+			if (item.amount > 0)
+				System.out.print(item.name + " ");
+		}
+		System.out.println("");
+		boolean k = false;
+		while (k == false) {
+			String s = StdIn.readString();
+			for (Item item : atkPlayer.items) {
+				if (item.name.equalsIgnoreCase(s)) {
+					if (item.amount > 0) {
+						item.effect(atkPM);
+						item.amount--;
+						k = true;
+					}
+				}
+			}
+			if (k == false) {
+				System.out.println("Select proper Item!");
+			}
+		}
 	}
 
 	private boolean executeMove(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, boolean k, String m) {
@@ -102,7 +143,7 @@ public class Fight {
 		for (Move move : atkPM.moves) {
 			System.out.print(move.name + " ");
 		}
-		System.out.println("\r\nSwitch");
+		System.out.println("\r\nSwitch Item");
 	}
 
 	private void applyEffects(Monster defPM, Move move) {
@@ -130,17 +171,18 @@ public class Fight {
 		defPM.stats.setHp(defPM.stats.getHp() - calculateDamage(atkPM, defPM, move));
 	}
 
-	private Monster selectNewMonster(Player atkPlayer, Monster atkPM, String m) {
+	private Monster selectNewMonster(Player atkPlayer, Monster atkPM) {
 		System.out.println("Select new Monster: ");
 		boolean k = false;
 		for (Monster n : atkPlayer.team) {
-			System.out.println(n.name);
+			System.out.print(n.name + " ");
 		}
+		System.out.println("");
 		while (!k) {
 			String newMonster = StdIn.readString();
 			for (Monster n : atkPlayer.team) {
 				if (n.name.equals(newMonster) && !atkPM.name.equals(newMonster)) {
-					atkPM = switchMon(atkPlayer, atkPM, n.name);
+					switchMon(atkPlayer, atkPM, n.name);
 					k = true;
 				}
 			}
@@ -193,15 +235,9 @@ public class Fight {
 		p.addMonsterToTeam(p.team, m);
 	}
 
-	private Monster switchMon(Player p, Monster active, String nextMon) {
-		for (Monster m : p.team) {
-			if (m.name.equals(nextMon)) {
-				System.out.println(p.name + " switched to " + nextMon);
-				return m;
-			}
-		}
-		System.out.println("Didn't switch!");
-		return active;
+	private void switchMon(Player p, Monster active, String nextMon) {
+		TeamManagement.swap(p, nextMon);
+		System.out.println(p.name + " switched to " + nextMon);
 	}
 
 	private boolean hit(Move m) {
@@ -218,5 +254,23 @@ public class Fight {
 			}
 		}
 		return true;
+	}
+
+	private void randomEncounter(Player p) {
+		int level = (int) (Math.random() * 99) + 1;
+		int m = (int) Math.random() * (createMonsters().size() - 1);
+		Monster mon = createMonsters().get(m);
+		mon.stats.setLevel(level);
+		System.out.println(mon.stats.getLevel());
+		Player p2 = new Player(mon.name, mon);
+		fight(p, p2);
+	}
+
+	private List<Monster> createMonsters() {
+		List<Monster> monster = new ArrayList<Monster>();
+		monster.add(new Wotah(0));
+		monster.add(new Krato(0));
+		monster.add(new Buhrn(0));
+		return monster;
 	}
 }

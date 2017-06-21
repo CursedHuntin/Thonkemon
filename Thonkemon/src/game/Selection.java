@@ -17,7 +17,6 @@ public class Selection {
 				new TeamManagement(p1, p2);
 			else
 				System.out.println("Wrong Input!");
-			System.out.println("KAPAPAPAPAPA");
 		}
 	}
 }
