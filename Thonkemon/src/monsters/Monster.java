@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moves.Move;
-import moves.MoveMethods;
 import statuses.Status;
 import types.Type;
 
-public class Monster implements MoveMethods {
+public abstract class Monster {
 	public String name;
 	public List<Move> moveset = new ArrayList<Move>();
 	public List<Move> moves = new ArrayList<Move>();
@@ -34,30 +33,9 @@ public class Monster implements MoveMethods {
 		this.stats = new Stats(types, level, stats);
 	}
 
-	public Monster(String name, Type[] types, int level, int[] stats, List<Move> moveset) {
-		this.name = name;
-		this.initStats = stats;
-		this.types = types;
-		this.stats = new Stats(types, level, stats);
-		this.moveset = moveset;
-		moves = getNewMoves(level);
-	}
+	abstract List<Move> getMoveset();
 
-	public List<Move> getMoveset() {
-		return null;
-	}
-
-	public List<Move> getMoves(int level) {
-		return null;
-	}
-
-	private List<Move> getNewMoves(int level) {
-		for (Move move : moveset) {
-			if (level >= move.level)
-				moves.add(move);
-		}
-		return moves;
-	}
+	abstract List<Move> getMoves(int level);
 
 	void setNickname(String name) {
 		this.name = name;
