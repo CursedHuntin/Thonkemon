@@ -6,5 +6,6 @@ public class Startup {
 		Player p1 = new Player();
 		Player p2 = new Player();
 		new Selection(p1, p2);
+		// Kappas
 	}
 }
