@@ -31,6 +31,8 @@ public class Fight {
 
 		while (!checkIfTeamHasNoHP(p1) && !checkIfTeamHasNoHP(p2)) {
 			while (p1M.stats.getHp() > 0 && p2M.stats.getHp() > 0) {
+				p1M = getActiveMonster(p1);
+				p2M = getActiveMonster(p2);
 				turn = getTurn(p1M, p2M);
 				alternatingTurns(p1, p2, p1M, p2M);
 
@@ -267,8 +269,9 @@ public class Fight {
 						return b;
 					}
 				}
-				System.out.println("Select proper Item!");
 			}
+			System.out.println("Select proper Ball!");
+
 		}
 	}
 
