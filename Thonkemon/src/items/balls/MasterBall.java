@@ -1,7 +1,7 @@
 package items.balls;
 
 public class MasterBall extends Ball {
-	public MasterBall() {
-		super(200);
+	public MasterBall(int amount) {
+		super("MasterBall", 200, amount);
 	}
 }

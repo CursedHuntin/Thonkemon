@@ -9,19 +9,23 @@ import moves.Heal;
 import moves.Move;
 import moves.Tackle;
 import types.Fighting;
+import types.Type;
 
 public class Krato extends Monster {
 
-	public Krato(int level) {
-		// name, type1, type2, level, hp, atk, def, spatk, spdef, init, catch
+	public static String name = "Krato";
+	public static Type[] types = { new Fighting(), null };
+	// hp, atk, def, spatk, spdef, init, catchrate
+	public static int[] stats = { 25, 10, 5, 1, 3, 7, 80 };
 
-		super("Krato", new Fighting(), null, level, 25, 10, 5, 1, 3, 7, 80);
+	public Krato(int level) {
+		super(name, types, level, stats);
 		super.moveset = getMoveset();
 		super.moves = getMoves(level);
 
 	}
 
-	List<Move> getMoveset() {
+	public List<Move> getMoveset() {
 		List<Move> m = new ArrayList<Move>();
 		m.add(new Tackle(1));
 		m.add(new Chop(7));
@@ -30,7 +34,7 @@ public class Krato extends Monster {
 		return m;
 	}
 
-	List<Move> getMoves(int level) {
+	public List<Move> getMoves(int level) {
 		for (Move move : super.moveset) {
 			if (level >= move.level)
 				moves.add(move);

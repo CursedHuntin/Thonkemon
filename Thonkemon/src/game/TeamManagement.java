@@ -67,4 +67,12 @@ public class TeamManagement {
 		}
 		System.out.println(p.team.get(0).name + " is your new starter!\r\n");
 	}
+
+	public static void swap(Player p, String s) {
+		for (int i = 0; i < p.team.size(); i++) {
+			if (p.team.get(i).name.equals(s)) {
+				Collections.swap(p.team, 0, i);
+			}
+		}
+	}
 }

@@ -2,8 +2,8 @@ package items.balls;
 
 public class GoodBall extends Ball {
 
-	public GoodBall() {
-		super(60);
+	public GoodBall(int amount) {
+		super("GoodBall", 60, amount);
 	}
 
 }

@@ -19,7 +19,7 @@ public class Healing extends Status {
 	void heal(Monster m) {
 		System.out.println("heal()");
 		m.stats.setHp(m.stats.getHp() + heal);
-		System.out.println("You healed for " + heal + " HP");
+		System.out.println(m.name + " healed for " + heal + " HP");
 	}
 
 	public void applyEffect(Monster m) {

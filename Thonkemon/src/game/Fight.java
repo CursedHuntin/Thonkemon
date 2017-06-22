@@ -1,22 +1,33 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import items.Item;
 import items.balls.Ball;
+import monsters.Buhrn;
+import monsters.Krato;
 import monsters.Monster;
+import monsters.Wotah;
 import moves.Move;
 import types.Type;
 
 public class Fight {
 	static int turn;
 	public static boolean skipTurn;
+	private static boolean monCaught = false;
 
 	public Fight(Player p1, Player p2) {
-		fight(p1, p2);
+		playerFight(p1, p2);
 	}
 
-	public void fight(Player p1, Player p2) {
+	public Fight(Player p) {
+		randomEncounter(p);
+	}
 
-		Monster p1M = p1.team.get(0);
-		Monster p2M = p2.team.get(0);
+	private void playerFight(Player p1, Player p2) {
+		Monster p1M = getActiveMonster(p1);
+		Monster p2M = getActiveMonster(p2);
 
 		while (!checkIfTeamHasNoHP(p1) && !checkIfTeamHasNoHP(p2)) {
 			while (p1M.stats.getHp() > 0 && p2M.stats.getHp() > 0) {
@@ -37,8 +48,131 @@ public class Fight {
 					return;
 				}
 			}
-			System.out.println("ZULUL");
 		}
+	}
+
+	private void randomEncounterFight(Player p, Monster m) {
+		Monster pm = getActiveMonster(p);
+
+		System.out.println("Encountered a " + m.name + " Lv" + m.stats.getLevel());
+		while (!checkIfTeamHasNoHP(p) && !monCaught) {
+			while (pm.stats.getHp() > 0 && m.stats.getHp() > 0 && !monCaught) {
+				pm = getActiveMonster(p);
+				turn = getTurn(pm, m);
+				randomEncounterAlternatingTurns(p, m, pm);
+
+			}
+			if (pm.stats.getHp() <= 0) {
+				pm = checkIfPlayerLost(p, pm);
+				if (pm == null) {
+					System.out.println(p.name + " fainted.");
+					return;
+				}
+			} else if (monCaught)
+				return;
+			else {
+				System.out.println(m.name + " fainted.");
+				System.out.println(p.name + " wins.");
+				return;
+			}
+		}
+	}
+
+	private void randomEncounterAlternatingTurns(Player p, Monster m, Monster pm) {
+		if (turn % 2 == 0) {
+			playerTurnAgainstMonster(p, m, pm);
+			if (checkIfMonsterFainted(m))
+				return;
+			pm = getActiveMonster(p);
+			randomTurn(p, m, pm);
+		} else {
+			randomTurn(p, m, pm);
+			if (checkIfMonsterFainted(pm))
+				return;
+			playerTurnAgainstMonster(p, m, pm);
+		}
+	}
+
+	private void playerTurnAgainstMonster(Player p, Monster m, Monster pm) {
+		if (!monCaught) {
+			System.out.println(p.name + "'s turn!");
+			printSelectionOnEncounter(pm);
+			boolean k = false;
+			while (k != true) {
+				String s = StdIn.readString();
+				if (s.equalsIgnoreCase("switch")) {
+					pm = selectNewMonster(p, pm);
+					k = true;
+
+				} else if (s.equalsIgnoreCase("item")) {
+					selectItem(p, pm);
+					k = true;
+				} else if (s.equalsIgnoreCase("catch")) {
+					if (catchMon(p, m, selectBall(p))) {
+						monCought(p, pm);
+						return;
+					} else
+						System.out.println(m.name + " managed to escape!");
+				} else {
+					for (Move move : pm.moves) {
+						if (move.name.equals(s)) {
+							executeMoveAgainstMonster(p, m, pm, move);
+							k = true;
+						}
+					}
+				}
+				if (!k)
+					System.out.println("Select proper Command!");
+			}
+			turn++;
+			skipTurn = false;
+		}
+	}
+
+	private void executeMoveAgainstMonster(Player p, Monster m, Monster pm, Move move) {
+		if (hit(move) && skipTurn != true) {
+			onMoveHitPlayerAttacking(m, p, pm, move);
+		} else {
+			onMoveMissedPlayerAttacking(m, p, pm, move);
+		}
+	}
+
+	private void randomTurn(Player p, Monster m, Monster pm) {
+		if (!monCaught) {
+			System.out.println(m.name + "'s turn!");
+			executeRandomMove(p, m, pm, getRandomMove(m));
+			turn++;
+			skipTurn = false;
+		}
+	}
+
+	private void executeRandomMove(Player p, Monster m, Monster pm, Move randomMove) {
+		for (Move move : m.moves) {
+			if (move.name.equals(randomMove.name)) {
+				if (hit(move) && skipTurn != true) {
+					onMoveHitMonsterAttacking(m, p, pm, move);
+				} else {
+					onMoveMissedMonsterAttacking(m, p, pm, move);
+				}
+				return;
+			}
+		}
+	}
+
+	private void onMoveMissedMonsterAttacking(Monster m, Player p, Monster pm, Move move) {
+		randomFightMissedOutputMonsterAttacking(m, p, pm, move);
+	}
+
+	private void onMoveMissedPlayerAttacking(Monster m, Player p, Monster pm, Move move) {
+		randomFightMissedOutputPlayerAttacking(m, p, pm, move);
+	}
+
+	private Monster getActiveMonster(Player p) {
+		for (Monster m : p.team) {
+			if (m.stats.getHp() > 0)
+				return m;
+		}
+		return p.team.get(0);
 	}
 
 	// wer greift zuerst an?
@@ -51,11 +185,13 @@ public class Fight {
 			playerTurn(p1, p2, p1M, p2M);
 			if (checkIfMonsterFainted(p2M))
 				return;
+			p1M = p1.team.get(0);
 			playerTurn(p2, p1, p2M, p1M);
 		} else {
 			playerTurn(p2, p1, p2M, p1M);
 			if (checkIfMonsterFainted(p1M))
 				return;
+			p2M = p2.team.get(0);
 			playerTurn(p1, p2, p1M, p2M);
 		}
 	}
@@ -65,36 +201,83 @@ public class Fight {
 	}
 
 	private void playerTurn(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM) {
+
 		System.out.println(atkPlayer.name + "'s turn!");
 		printSelection(atkPM);
 		boolean k = false;
 		while (k != true) {
 			String m = StdIn.readString();
-			if (m.equals("Switch")) {
-				atkPM = selectNewMonster(atkPlayer, atkPM, m);
+			if (m.equalsIgnoreCase("switch")) {
+				atkPM = selectNewMonster(atkPlayer, atkPM);
+				k = true;
+
+			} else if (m.equalsIgnoreCase("item")) {
+				selectItem(atkPlayer, atkPM);
 				k = true;
 			} else {
-				k = executeMove(atkPlayer, defPlayer, atkPM, defPM, k, m);
+				for (Move move : atkPM.moves) {
+					if (move.name.equals(m)) {
+						executeMove(atkPlayer, defPlayer, atkPM, defPM, move);
+						k = true;
+					}
+				}
 			}
 			if (!k)
-				System.out.println("Wrong Input!1");
+				System.out.println("Select proper Command!");
 		}
 		turn++;
 		skipTurn = false;
 	}
 
-	private boolean executeMove(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, boolean k, String m) {
-		for (Move move : atkPM.moves) {
-			if (move.name.equals(m)) {
-				if (hit(move) && skipTurn != true) {
-					onMoveHit(atkPlayer, defPlayer, atkPM, defPM, move);
-				} else {
-					onMoveMissed(atkPlayer, defPlayer, atkPM, defPM, move);
+	private void selectItem(Player atkPlayer, Monster atkPM) {
+		for (Item item : atkPlayer.items) {
+			if (item.amount > 0)
+				System.out.print(item.name + " ");
+		}
+		System.out.println("");
+		boolean k = false;
+		while (k == false) {
+			String s = StdIn.readString();
+			for (Item item : atkPlayer.items) {
+				if (item.name.equalsIgnoreCase(s)) {
+					if (item.amount > 0) {
+						item.effect(atkPM);
+						item.amount--;
+						k = true;
+					}
 				}
-				k = true;
+			}
+			if (k == false) {
+				System.out.println("Select proper Item!");
 			}
 		}
-		return k;
+	}
+
+	private Ball selectBall(Player p) {
+		for (Ball b : p.balls) {
+			System.out.print(b.name + " ");
+		}
+		System.out.println("");
+		while (true) {
+			String s = StdIn.readString();
+			for (Ball b : p.balls) {
+				if (b.name.equalsIgnoreCase(s)) {
+					if (b.amount > 0) {
+						b.amount--;
+						return b;
+					}
+				}
+				System.out.println("Select proper Item!");
+			}
+		}
+	}
+
+	private void executeMove(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, Move move) {
+		if (hit(move) && skipTurn != true) {
+			onMoveHit(atkPlayer, defPlayer, atkPM, defPM, move);
+		} else {
+			onMoveMissed(atkPlayer, defPlayer, atkPM, defPM, move);
+		}
 	}
 
 	private void printSelection(Monster atkPM) {
@@ -102,7 +285,15 @@ public class Fight {
 		for (Move move : atkPM.moves) {
 			System.out.print(move.name + " ");
 		}
-		System.out.println("\r\nSwitch");
+		System.out.println("\r\nSwitch Item");
+	}
+
+	private void printSelectionOnEncounter(Monster atkPM) {
+		System.out.println("Select Move: ");
+		for (Move move : atkPM.moves) {
+			System.out.print(move.name + " ");
+		}
+		System.out.println("\r\nSwitch Item Catch");
 	}
 
 	private void applyEffects(Monster defPM, Move move) {
@@ -114,33 +305,85 @@ public class Fight {
 	}
 
 	private void onMoveMissed(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, Move move) {
+		trainerFightMissedOutput(atkPlayer, defPlayer, atkPM, defPM, move);
+
+	}
+
+	private void randomFightMissedOutputMonsterAttacking(Monster m, Player defPlayer, Monster defPM, Move move) {
+
+		System.out.println(m.name + "'s " + move.name + " missed!");
+		System.out.println(m.name + " is at " + m.stats.getHp() + " HP");
+		System.out.println(defPlayer.name + "'s " + defPM.name + " is at " + defPM.stats.getHp() + " HP");
+	}
+
+	private void randomFightMissedOutputPlayerAttacking(Monster m, Player defPlayer, Monster defPM, Move move) {
+
+		System.out.println(defPM.name + "'s " + move.name + " missed!");
+		System.out.println(defPlayer.name + "'s " + defPM.name + " is at " + defPM.stats.getHp() + " HP");
+		System.out.println(m.name + " is at " + m.stats.getHp() + " HP");
+	}
+
+	private void trainerFightMissedOutput(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, Move move) {
 		System.out.println(atkPM.name + "'s " + move.name + " missed!");
 		System.out.println(atkPlayer.name + "'s " + atkPM.name + " is at " + atkPM.stats.getHp() + " HP");
 		System.out.println(defPlayer.name + "'s " + defPM.name + " is at " + defPM.stats.getHp() + " HP");
 	}
 
 	private void onMoveHit(Player atkPlayer, Player defPlayer, Monster atkPM, Monster defPM, Move move) {
+
+		String atk = atkPlayer.name + "'s ";
+		String def = defPlayer.name + "'s ";
+		if (atkPlayer.name.equals("Wild")) {
+			atk = "";
+		} else if (defPlayer.name.equals("Wild")) {
+			def = "";
+		}
+
 		applyEffects(defPM, move);
 		if (move.damage > 0)
 			System.out.println(move.name + " did " + calculateDamage(atkPM, defPM, move) + " damage.");
-		System.out.println(atkPlayer.name + "'s " + atkPM.name + " is at " + atkPM.stats.getHp() + " HP");
+		System.out.println(atk + atkPM.name + " is at " + atkPM.stats.getHp() + " HP");
 		if (defPM.stats.getHp() > calculateDamage(atkPM, defPM, move))
-			System.out.println(defPlayer.name + "'s " + defPM.name + " is at "
+			System.out.println(def + defPM.name + " is at "
 					+ (defPM.stats.getHp() - calculateDamage(atkPM, defPM, move)) + " HP." + "\r\n");
 		defPM.stats.setHp(defPM.stats.getHp() - calculateDamage(atkPM, defPM, move));
 	}
 
-	private Monster selectNewMonster(Player atkPlayer, Monster atkPM, String m) {
+	private void onMoveHitMonsterAttacking(Monster m, Player p, Monster pm, Move move) {
+
+		applyEffects(pm, move);
+		if (move.damage > 0)
+			System.out.println(move.name + " did " + calculateDamage(m, pm, move) + " damage.");
+		System.out.println(m.name + " is at " + m.stats.getHp() + " HP");
+		if (pm.stats.getHp() > calculateDamage(m, pm, move))
+			System.out.println(p.name + "'s " + pm.name + " is at " + (pm.stats.getHp() - calculateDamage(m, pm, move))
+					+ " HP." + "\r\n");
+		pm.stats.setHp(pm.stats.getHp() - calculateDamage(m, pm, move));
+	}
+
+	private void onMoveHitPlayerAttacking(Monster m, Player p, Monster pm, Move move) {
+
+		applyEffects(m, move);
+		if (move.damage > 0)
+			System.out.println(move.name + " did " + calculateDamage(pm, m, move) + " damage.");
+		System.out.println(p.name + "'s " + pm.name + " is at " + pm.stats.getHp() + " HP");
+		if (m.stats.getHp() > calculateDamage(pm, m, move))
+			System.out.println(m.name + " is at " + (m.stats.getHp() - calculateDamage(pm, m, move)) + " HP." + "\r\n");
+		m.stats.setHp(m.stats.getHp() - calculateDamage(pm, m, move));
+	}
+
+	private Monster selectNewMonster(Player atkPlayer, Monster atkPM) {
 		System.out.println("Select new Monster: ");
 		boolean k = false;
 		for (Monster n : atkPlayer.team) {
-			System.out.println(n.name);
+			System.out.print(n.name + " ");
 		}
+		System.out.println("");
 		while (!k) {
 			String newMonster = StdIn.readString();
 			for (Monster n : atkPlayer.team) {
 				if (n.name.equals(newMonster) && !atkPM.name.equals(newMonster)) {
-					atkPM = switchMon(atkPlayer, atkPM, n.name);
+					switchMon(atkPlayer, atkPM, n.name);
 					k = true;
 				}
 			}
@@ -155,7 +398,6 @@ public class Fight {
 			if (m.stats.getHp() > 0) {
 				System.out.println(p.name + "'s " + p1M.name + " fainted.");
 				p1M = TeamManagement.selectNewMonster(p);
-				System.out.println(p.name + " switched to " + p1M.name);
 				return p1M;
 			}
 		}
@@ -191,17 +433,14 @@ public class Fight {
 
 	private void monCought(Player p, Monster m) {
 		p.addMonsterToTeam(p.team, m);
+		System.out.println(m.name + " has been caught!\r\n");
+		monCaught = true;
+
 	}
 
-	private Monster switchMon(Player p, Monster active, String nextMon) {
-		for (Monster m : p.team) {
-			if (m.name.equals(nextMon)) {
-				System.out.println(p.name + " switched to " + nextMon);
-				return m;
-			}
-		}
-		System.out.println("Didn't switch!");
-		return active;
+	private void switchMon(Player p, Monster active, String nextMon) {
+		TeamManagement.swap(p, nextMon);
+		System.out.println(p.name + " switched to " + nextMon);
 	}
 
 	private boolean hit(Move m) {
@@ -218,5 +457,30 @@ public class Fight {
 			}
 		}
 		return true;
+	}
+
+	private void randomEncounter(Player p) {
+		Monster m = createRandomMonster();
+		randomEncounterFight(p, m);
+	}
+
+	private Monster createRandomMonster() {
+		int level = (int) (Math.random() * 99) + 1;
+		int m = (int) (Math.random() * (createMonsters(level).size()));
+		Monster mon = createMonsters(level).get(m);
+		mon.setNickname("Wild " + mon.name);
+		return mon;
+	}
+
+	private List<Monster> createMonsters(int level) {
+		List<Monster> monster = new ArrayList<Monster>();
+		monster.add(new Wotah(level));
+		monster.add(new Krato(level));
+		monster.add(new Buhrn(level));
+		return monster;
+	}
+
+	private Move getRandomMove(Monster m) {
+		return m.moves.get((int) (Math.random() * m.moves.size()));
 	}
 }
