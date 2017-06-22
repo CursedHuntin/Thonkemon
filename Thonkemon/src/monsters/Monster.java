@@ -37,7 +37,7 @@ public abstract class Monster {
 
 	abstract List<Move> getMoves(int level);
 
-	void setNickname(String name) {
+	public void setNickname(String name) {
 		this.name = name;
 	}
 }
