@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import items.Item;
+import items.balls.Ball;
+import items.balls.MasterBall;
 import items.potions.MediumHealthPotion;
 import monsters.Buhrn;
 import monsters.Krato;
@@ -14,11 +16,13 @@ public class Player {
 	String name;
 	List<Monster> team = new ArrayList<Monster>();
 	List<Item> items = new ArrayList<Item>();
+	List<Ball> balls = new ArrayList<Ball>();
 
 	public Player() {
 		this.name = getName();
 		createTeam();
 		createItems();
+		createBalls();
 	}
 
 	public Player(String name) {
@@ -46,6 +50,10 @@ public class Player {
 
 	private void createItems() {
 		items.add(new MediumHealthPotion(1));
+	}
+
+	private void createBalls() {
+		balls.add(new MasterBall(1));
 	}
 
 	List<Monster> addMonsterToTeam(List<Monster> team, Monster m) {

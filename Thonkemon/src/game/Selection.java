@@ -2,7 +2,9 @@ package game;
 
 public class Selection {
 	public Selection(Player p1, Player p2) {
-		actionSelection(p1, p2);
+		while (true) {
+			actionSelection(p1, p2);
+		}
 	}
 
 	private void actionSelection(Player p1, Player p2) {
