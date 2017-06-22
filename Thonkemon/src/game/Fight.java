@@ -111,7 +111,8 @@ public class Fight {
 					if (catchMon(p, m, selectBall(p))) {
 						monCought(p, pm);
 						return;
-					}
+					} else
+						System.out.println(m.name + " managed to escape!");
 				} else {
 					for (Move move : pm.moves) {
 						if (move.name.equals(s)) {
