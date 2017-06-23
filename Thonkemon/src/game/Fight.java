@@ -23,6 +23,7 @@ public class Fight {
 
 	public Fight(Player p) {
 		randomEncounter(p);
+		monCaught = false;
 	}
 
 	private void playerFight(Player p1, Player p2) {
@@ -110,11 +111,15 @@ public class Fight {
 					selectItem(p, pm);
 					k = true;
 				} else if (s.equalsIgnoreCase("catch")) {
-					if (catchMon(p, m, selectBall(p))) {
-						monCought(p, pm);
+					Ball b = selectBall(p);
+					if (b == null)
+						return;
+					if (catchMon(p, m, b)) {
+						monCought(p, m);
 						return;
 					} else
 						System.out.println(m.name + " managed to escape!");
+
 				} else {
 					for (Move move : pm.moves) {
 						if (move.name.equals(s)) {
@@ -234,7 +239,7 @@ public class Fight {
 	private void selectItem(Player atkPlayer, Monster atkPM) {
 		for (Item item : atkPlayer.items) {
 			if (item.amount > 0)
-				System.out.print(item.name + " ");
+				System.out.print(item.name + "(" + item.amount + ") ");
 		}
 		System.out.println("");
 		boolean k = false;
@@ -256,8 +261,16 @@ public class Fight {
 	}
 
 	private Ball selectBall(Player p) {
+		boolean k = false;
 		for (Ball b : p.balls) {
-			System.out.print(b.name + " ");
+			if (b.amount > 0) {
+				System.out.print(b.name + "(" + b.amount + ") ");
+				k = true;
+			}
+		}
+		if (k == false) {
+			System.out.println("No Balls available!");
+			return null;
 		}
 		System.out.println("");
 		while (true) {
@@ -435,8 +448,22 @@ public class Fight {
 	}
 
 	private void monCought(Player p, Monster m) {
-		p.addMonsterToTeam(p.team, m);
 		System.out.println(m.name + " has been caught!\r\n");
+		System.out.println("Select a new Name: ");
+		String s = StdIn.readString();
+		boolean k = false;
+		if (s.equals(m.name.replace("Wild ", ""))) {
+			while (!k) {
+				System.out.println("Please select a different Name: ");
+				s = StdIn.readString();
+				if (!s.equals(m.name.replace("Wild ", ""))) {
+					m.setNickname(s);
+				}
+				System.out.println(k);
+			}
+		} else
+			m.setNickname(s);
+		p.addMonsterToTeam(p.team, m);
 		monCaught = true;
 
 	}
