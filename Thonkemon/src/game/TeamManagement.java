@@ -75,4 +75,11 @@ public class TeamManagement {
 			}
 		}
 	}
+
+	static void Heal(Player p) {
+		for (Monster m : p.team) {
+			m.stats.setHp(m.stats.getMaxHp());
+		}
+		System.out.println(p.name + "'s Team has been healed!\r\n");
+	}
 }

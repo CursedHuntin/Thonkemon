@@ -9,7 +9,7 @@ public class Selection {
 
 	private void actionSelection(Player p1, Player p2) {
 		System.out.println("Select: ");
-		System.out.println("Fight Team Random");
+		System.out.println("Fight Team Random Heal");
 		while (true) {
 			String s = StdIn.readString();
 			if (s.equals("Fight")) {
@@ -27,6 +27,20 @@ public class Selection {
 						return;
 					} else if (p2.name.equals(s)) {
 						new Fight(p2);
+						return;
+					} else
+						System.out.println("Wrong Input!");
+				}
+			} else if (s.equalsIgnoreCase("heal")) {
+				System.out.println("Select Player: ");
+				System.out.println(p1.name + " " + p2.name);
+				while (true) {
+					s = StdIn.readString();
+					if (p1.name.equals(s)) {
+						TeamManagement.Heal(p1);
+						return;
+					} else if (p2.name.equals(s)) {
+						TeamManagement.Heal(p2);
 						return;
 					} else
 						System.out.println("Wrong Input!");

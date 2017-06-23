@@ -73,7 +73,7 @@ public class Stats {
 	}
 
 	public int getMaxHp() {
-		return hp;
+		return maxHP;
 	}
 
 	public void setMaxHp(int maxHP) {
