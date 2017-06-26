@@ -7,12 +7,13 @@ import moves.Heal;
 import moves.Move;
 import moves.Tackle;
 import moves.Watergun;
+import types.None;
 import types.Type;
 import types.Water;
 
 public class Wotah extends Monster {
 	public static String name = "Wotah";
-	public static Type[] types = { new Water(), null };
+	public static Type[] types = { new Water(), new None() };
 	// hp, atk, def, spatk, spdef, init, catchrate
 	public static int[] stats = { 19, 7, 6, 8, 7, 8, 60 };
 

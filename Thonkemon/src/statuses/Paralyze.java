@@ -1,6 +1,6 @@
 package statuses;
 
-import game.Fight;
+import game.fight.Fight;
 import monsters.Monster;
 
 public class Paralyze extends Status {

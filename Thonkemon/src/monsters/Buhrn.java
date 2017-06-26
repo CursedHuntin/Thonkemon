@@ -7,12 +7,13 @@ import moves.Fire;
 import moves.Fireblast;
 import moves.Move;
 import moves.Tackle;
+import types.None;
 import types.Type;
 
 public class Buhrn extends Monster {
 
 	public static String name = "Buhrn";
-	public static Type[] types = { new Fire(), null };
+	public static Type[] types = { new Fire(), new None() };
 	// hp, atk, def, spatk, spdef, init, catchrate
 	public static int[] stats = { 22, 2, 5, 10, 6, 10, 60 };
 
