@@ -5,6 +5,7 @@ import monsters.Monster;
 import moves.Move;
 import types.Type;
 
+//here we go
 public class Fight {
 	static int turn;
 	public static boolean skipTurn;
@@ -12,7 +13,8 @@ public class Fight {
 	public Fight(Player p1, Player p2) {
 		fight(p1, p2);
 	}
-	//LMAO!
+
+	// LMAO!
 	public void fight(Player p1, Player p2) {
 
 		Monster p1M = p1.team.get(0);
