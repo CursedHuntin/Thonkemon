@@ -11,5 +11,4 @@ public class Heal extends Move {
 		super("Heal", new Normal(), new StatusAttack(), level, 0, 10, 100,
 				new Healing((int) (10 + m.stats.getSpAtk() / 1.5), m));
 	}
-
 }
