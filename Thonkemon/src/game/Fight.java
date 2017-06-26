@@ -12,7 +12,7 @@ public class Fight {
 	public Fight(Player p1, Player p2) {
 		fight(p1, p2);
 	}
-
+	//LMAO!
 	public void fight(Player p1, Player p2) {
 
 		Monster p1M = p1.team.get(0);
