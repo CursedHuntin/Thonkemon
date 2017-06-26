@@ -13,10 +13,10 @@ import monsters.Monster;
 import monsters.Wotah;
 
 public class Player {
-	String name;
-	List<Monster> team = new ArrayList<Monster>();
-	List<Item> items = new ArrayList<Item>();
-	List<Ball> balls = new ArrayList<Ball>();
+	public String name;
+	public List<Monster> team = new ArrayList<Monster>();
+	public List<Item> items = new ArrayList<Item>();
+	public List<Ball> balls = new ArrayList<Ball>();
 
 	public Player() {
 		this.name = getName();
@@ -56,7 +56,7 @@ public class Player {
 		balls.add(new MasterBall(1));
 	}
 
-	List<Monster> addMonsterToTeam(List<Monster> team, Monster m) {
+	public List<Monster> addMonsterToTeam(List<Monster> team, Monster m) {
 		team.add(m);
 		return team;
 	}

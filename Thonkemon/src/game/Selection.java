@@ -1,5 +1,8 @@
 package game;
 
+import game.fight.PlayerFight;
+import game.fight.RandomEncounter;
+
 public class Selection {
 	public Selection(Player p1, Player p2) {
 		while (true) {
@@ -13,7 +16,7 @@ public class Selection {
 		while (true) {
 			String s = StdIn.readString();
 			if (s.equals("Fight")) {
-				new Fight(p1, p2);
+				new PlayerFight(p1, p2);
 				return;
 			} else if (s.equals("Team"))
 				new TeamManagement(p1, p2);
@@ -23,10 +26,10 @@ public class Selection {
 				while (true) {
 					s = StdIn.readString();
 					if (p1.name.equals(s)) {
-						new Fight(p1);
+						new RandomEncounter(p1);
 						return;
 					} else if (p2.name.equals(s)) {
-						new Fight(p2);
+						new RandomEncounter(p2);
 						return;
 					} else
 						System.out.println("Wrong Input!");
