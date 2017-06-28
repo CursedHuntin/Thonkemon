@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+ 
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" 
+xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.Selection">
+   <children>
+   <Button visible= "true" fx:id="Load" layoutX="100.0" layoutY="80.0" prefHeight="200.0" prefWidth="200.0" mnemonicParsing="false" 
+      	onAction="#handleLoadButton" text="Spielstand Laden" />
+      <Button visible= "true" fx:id="NoLoad" layoutX="700.0" layoutY="80.0" prefHeight="200.0" prefWidth="200.0" mnemonicParsing="false" 
+      	onAction="#handleNoLoadButton" text="Neues Spiel" />
+      	<Button visible= "false" fx:id="Fight" layoutX="50.0" layoutY="420.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleFightButton"/>
+      	<Button visible= "false" fx:id="Escape" layoutX="520.0" layoutY="520.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleEscapeButton"/>
+      	<Button visible= "false" fx:id="Items" layoutX="520.0" layoutY="420.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleItemsButton"/>
+      	<Button visible= "false" fx:id="Thonkemon" layoutX="50.0" layoutY="520.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleThonkemonButton"/>
+      </children>
+</Pane>

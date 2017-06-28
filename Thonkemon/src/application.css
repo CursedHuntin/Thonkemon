@@ -1,0 +1,126 @@
+
+#title {
+    -fx-font: 32px Consolas;
+    -fx-color: lightseagreen;
+    -fx-text-fill:blue;
+}
+
+#ok{
+    -fx-font: 12px Consolas;
+}
+#nachricht {
+ -fx-font: 15px Consolas;
+ -fx-fill: Green;
+ -fx-font-weight: bold;
+ -fx-text-fill:green;
+}
+#laut {
+ -fx-font: 15px Consolas;
+ -fx-fill: blue;
+ -fx-font-weight: bold;
+ -fx-text-fill:blue;
+}
+#tzeit {
+ -fx-font: 15px Consolas;
+ -fx-fill: blue;
+ -fx-font-weight: bold;
+ -fx-text-fill:blue;
+}
+#zeit {
+ -fx-font: 14px Consolas;
+ -fx-fill: blue;
+ -fx-font-weight: bold;
+ -fx-text-fill:blue;
+}
+#repeat {
+ -fx-font: 14px Consolas;
+ -fx-fill: blue;
+ -fx-font-weight: bold;
+ -fx-text-fill:blue;
+}
+#again {
+ -fx-font: 14px Consolas;
+ -fx-fill: blue;
+ -fx-font-weight: bold;
+ -fx-text-fill:blue;
+}
+#randum {
+ -fx-font: 14px Consolas;
+ -fx-fill: blue;
+ -fx-font-weight: bold;
+ -fx-text-fill:blue;
+}
+#nachrichtselect {
+ -fx-font: 20px Consolas;
+ -fx-fill: red;
+ -fx-font-weight: bold;
+ -fx-text-fill:red;
+}
+#saveselect {
+ -fx-font: 20px Consolas;
+ -fx-fill: red;
+ -fx-font-weight: bold;
+ -fx-text-fill:red;
+}
+#button1{
+	-fx-fill:red;
+	-fx-text-fill:rgb(0,0,0);
+	-fx-background-color: yellowgreen;
+}
+
+#error_button{
+	-fx-font: 20px Consolas;
+	-fx-fill:red;
+	-fx-text-fill:rgb(255,0,0);
+	-fx-background-color: blue;
+}
+
+#button5{
+	-fx-fill:red;
+	-fx-text-fill:rgb(0,0,0);
+	-fx-background-color: purple;
+}
+#saving{
+	-fx-fill:green;
+	-fx-text-fill:rgb(0,0,0);
+	-fx-background-color: purple;
+}
+
+#button2{
+	-fx-fill:red;
+	-fx-background-color: red;
+	-fx-text-fill:rgb(0,0,0);
+}
+
+#button3{
+	-fx-fill:ray;
+	-fx-text-fill:rgb(0,0,0);
+	-fx-background-color: gray;
+}
+
+#button4{
+	-fx-fill:gray;
+	-fx-text-fill:rgb(0,0,0);
+	-fx-background-color: gray;
+}
+#remove{
+	-fx-fill:gray;
+	-fx-text-fill:rgb(0,0,0);
+	-fx-background-color: gray;
+}
+
+.button{
+	-fx-text-fill:rgb(0,0,0);
+	-fx-background-color: rgb(160,160,160);
+
+}
+.root {
+ -fx-background-color: skyblue;
+}
+
+.Pane{
+        -fx-background-radius:21px;
+        -fx-font-family: "Consolas";
+        -fx-font-size:11px;
+        -fx-color:Blue;
+}
