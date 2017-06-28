@@ -26,8 +26,6 @@ public class Startup extends Application {
 			primaryStage.setTitle("Thonkemon");
 			primaryStage.centerOnScreen();
 			primaryStage.show();
-			Player p1 = new Player();
-			Player p2 = new Player();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

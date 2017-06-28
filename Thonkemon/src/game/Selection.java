@@ -55,6 +55,11 @@ public class Selection {
 		Fight.setVisible(true);
 		Load.setVisible(false);
 		NoLoad.setVisible(false);
+		Player p1 = new Player();
+		Player p2 = new Player();
+		while (true) {
+			actionSelection(p1, p2);
+		}
 	}
 
 	@FXML
@@ -77,7 +82,7 @@ public class Selection {
 
 	}
 
-	private void actionSelection(Player p1, Player p2) {
+	public static void actionSelection(Player p1, Player p2) {
 		System.out.println("Select: ");
 		System.out.println("Fight Team Random");
 		while (true) {
