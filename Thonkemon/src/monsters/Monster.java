@@ -3,6 +3,7 @@ package monsters;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.StdIn;
 import moves.Move;
 import statuses.Status;
 import types.Type;
@@ -15,16 +16,7 @@ public abstract class Monster {
 	public int[] initStats;
 	public Status status;
 	public Type[] types;
-
-	// public Monster(String name, Type type1, Type type2, int level, int maxHP,
-	// int atk, int def, int spAtk, int spDef,
-	// int init, int catchrate) {
-	//
-	// this.name = name;
-	// stats = new Stats(type1, type2, level, maxHP, atk, def, spAtk, spDef,
-	// init, catchrate);
-	//
-	// }
+	public static Move[] MoveArray = new Move[4];
 
 	public Monster(String name, Type[] types, int level, int[] stats) {
 		this.name = name;
@@ -39,5 +31,55 @@ public abstract class Monster {
 
 	public void setNickname(String name) {
 		this.name = name;
+	}
+
+	public static void setMoves(Monster m) {
+		System.out.println("Select your Moves: ");
+		for (Move move : m.moves) {
+			System.out.print(move.name + " ");
+		}
+		int i = 0;
+		boolean k;
+		while (i < 4 && i < m.moves.size()) {
+			k = false;
+			String s = StdIn.readString();
+			for (Move move : m.moves) {
+				if (move.name.equalsIgnoreCase(s)) {
+					for (int j = 0; j < 4; j++) {
+						if (MoveArray[j] != null) {
+							if (MoveArray[j].name.equalsIgnoreCase(s)) {
+								k = true;
+							}
+						}
+					}
+					if (!k) {
+						MoveArray[i] = move;
+						i++;
+					}
+				}
+
+			}
+		}
+
+		List<Move> fightMoves = new ArrayList<Move>();
+		int a = 0;
+		boolean b;
+
+		while (a < 4 && a < m.moves.size()) {
+			b = false;
+			String s = StdIn.readString();
+			for (Move move : m.moves) {
+				if (move.name.equalsIgnoreCase(s)) {
+					for (Move x : fightMoves) {
+						if (x.name.equalsIgnoreCase(s))
+							b = true;
+					}
+					if (!b) {
+						fightMoves.add(move);
+						a++;
+					}
+				}
+			}
+		}
 	}
 }
