@@ -2,11 +2,10 @@ package game;
 
 import game.fight.PlayerFight;
 import game.fight.RandomEncounter;
-import monsters.Monster;
 
 public class Selection {
 	public Selection(Player p1, Player p2) {
-		Monster.setMoves(p1.team.get(0));
+		// Monster.setMoves(p1.team.get(0));
 		while (true) {
 			actionSelection(p1, p2);
 		}
