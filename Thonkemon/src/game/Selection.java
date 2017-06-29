@@ -1,9 +1,13 @@
 package game;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class Selection {
@@ -13,6 +17,10 @@ public class Selection {
 	public boolean play = false;
 	private Stage primaryStage;
 	private Scene scene;
+	public static File[] data;
+	public static int leng = 0;
+	public static int state = 0;
+	public static String Item_wanted;
 
 	@FXML
 	private Button Load;
@@ -36,9 +44,114 @@ public class Selection {
 	private Button A4;
 	@FXML
 	private Button Back;
+	@FXML
+	private Button ItemsBack;
+	@FXML
+	private Button ItemsSele;
 
-	Player p1 = new Player();
-	Player p2 = new Player();
+	@FXML
+	private ListView<String> lv = new ListView<String>();
+
+	@FXML
+	protected void handleItemsButton(ActionEvent event) {
+		lv.setLayoutX(15.0);
+		lv.setLayoutY(50.0);
+		if (leng == 0) {
+			try {
+				data = Read_items.Einlesen2("mainlist");
+			} catch (FileNotFoundException e) {
+				System.out.println("Beim erstllen deiner Playlist gab es einen Fehler: \n"
+						+ "Entweder existiert die Liste nicht oder eine Musikdatei fehlt");
+			}
+			int t = 0;
+			for (t = 0; t < leng; t++) {
+				lv.getItems().add(new File(data[t].toString()).getName());
+			}
+			lv.getSelectionModel().select(0);
+		}
+		state = 0;
+		lv.setVisible(true);
+		ItemsBack.setVisible(true);
+		ItemsSele.setVisible(true);
+		Items.setVisible(false);
+		Escape.setVisible(false);
+		Thonkemon.setVisible(false);
+		Fight.setVisible(false);
+
+	}
+
+	@FXML
+	protected void handleItemsSeleButton(ActionEvent event) {
+		// Flucht
+		String selected_one = lv.getSelectionModel().getSelectedItem();
+		for (; leng > 0; leng--) {
+			lv.getItems().remove(leng - 1);
+		}
+		if (state == 0) {
+			try {
+				data = Read_items.Einlesen2(selected_one);
+			} catch (FileNotFoundException e) {
+				System.out.println("Beim erstllen deiner Liste gab es einen Fehler: \n"
+						+ "Entweder existiert die Liste nicht oder ein element fehlt");
+			}
+			state++;
+			int t = 0;
+			for (t = 0; t < leng; t++) {
+				lv.getItems().add(new File(data[t].toString()).getName());
+			}
+			lv.getSelectionModel().select(0);
+		} else {
+			Item_wanted = lv.getSelectionModel().getSelectedItem();
+			// Was das Item bringen soll halt e.e
+			Items.setVisible(true);
+			Escape.setVisible(true);
+			Thonkemon.setVisible(true);
+			Fight.setVisible(true);
+			lv.setVisible(false);
+			ItemsBack.setVisible(false);
+			ItemsSele.setVisible(false);
+		}
+
+	}
+
+	@FXML
+	protected void handleItemsBackButton(ActionEvent event) {
+		// Flucht
+		if (state == 0) {
+			for (; leng > 0; leng--) {
+				lv.getItems().remove(leng - 1);
+			}
+			ItemsBack.setVisible(false);
+			ItemsSele.setVisible(false);
+			Items.setVisible(true);
+			Escape.setVisible(true);
+			Thonkemon.setVisible(true);
+			Fight.setVisible(true);
+			lv.setVisible(false);
+			lv.setLayoutX(10000.0);// visible for the win???
+			lv.setLayoutY(10000.0);
+
+		} else {
+			for (; leng > 0; leng--) {
+				lv.getItems().remove(leng - 1);
+			}
+			try {
+				data = Read_items.Einlesen2("mainlist");
+			} catch (FileNotFoundException e) {
+				System.out.println("Beim erstllen deiner Liste gab es einen Fehler: \n"
+						+ "Entweder existiert die Liste nicht oder ein element fehlt");
+			}
+			int t = 0;
+			for (t = 0; t < leng; t++) {
+				lv.getItems().add(new File(data[t].toString()).getName());
+			}
+			lv.getSelectionModel().select(0);
+		}
+		state = 0;
+	}
+
+	// Player p1 = new Player();
+	// Player p2 = new Player();
 
 	// public Selection(Player p1, Player p2) {
 	// while (true) {
@@ -68,11 +181,17 @@ public class Selection {
 	@FXML
 	protected void handleBackButton(ActionEvent event) {
 		// Flucht
+		A1.setVisible(false);
+		A2.setVisible(false);
+		A3.setVisible(false);
+		A4.setVisible(false);
+		Back.setDisable(true);
+		Back.setVisible(false);
 		Items.setVisible(true);
 		Escape.setVisible(true);
 		Thonkemon.setVisible(true);
 		Fight.setVisible(true);
-		Back.setDisable(true);
+
 	}
 
 	@FXML
@@ -111,17 +230,17 @@ public class Selection {
 		Escape.setVisible(false);
 		Thonkemon.setVisible(false);
 		Fight.setVisible(false);
+		A1.setVisible(true);
+		A2.setVisible(true);
+		A3.setVisible(true);
+		A4.setVisible(true);
+		Back.setVisible(true);
 		// open attack screen
 	}
 
 	@FXML
 	protected void handleEscapeButton(ActionEvent event) {
 		// Flucht
-	}
-
-	@FXML
-	protected void handleItemsButton(ActionEvent event) {
-
 	}
 
 	@FXML
