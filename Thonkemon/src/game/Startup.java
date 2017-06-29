@@ -17,7 +17,7 @@ public class Startup extends Application {
 			Parent root = (Parent) loader.load();
 			Selection con = (Selection) loader.getController();
 			con.setStage(primaryStage);
-			Scene scene = new Scene(root, 1000, 600);
+			Scene scene = new Scene(root, 1000, 650);
 			con.setScene(scene);
 			String sheet = getClass().getResource("/application.css").toExternalForm();
 			scene.getStylesheets().add(sheet);

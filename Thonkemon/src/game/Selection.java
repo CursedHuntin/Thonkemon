@@ -26,12 +26,54 @@ public class Selection {
 	private Button Thonkemon;
 	@FXML
 	private Button Escape;
+	@FXML
+	private Button A1;
+	@FXML
+	private Button A2;
+	@FXML
+	private Button A3;
+	@FXML
+	private Button A4;
+	@FXML
+	private Button Back;
+
+	Player p1 = new Player();
+	Player p2 = new Player();
 
 	// public Selection(Player p1, Player p2) {
 	// while (true) {
 	// actionSelection(p1, p2);
 	// }
 	// }
+	@FXML
+	protected void handleA1Button(ActionEvent event) {
+		// Flucht
+	}
+
+	@FXML
+	protected void handleA2Button(ActionEvent event) {
+		// Flucht
+	}
+
+	@FXML
+	protected void handleA3Button(ActionEvent event) {
+		// Flucht
+	}
+
+	@FXML
+	protected void handleA4Button(ActionEvent event) {
+		// Flucht
+	}
+
+	@FXML
+	protected void handleBackButton(ActionEvent event) {
+		// Flucht
+		Items.setVisible(true);
+		Escape.setVisible(true);
+		Thonkemon.setVisible(true);
+		Fight.setVisible(true);
+		Back.setDisable(true);
+	}
 
 	@FXML
 	protected void handleLoadButton(ActionEvent event) {
@@ -55,16 +97,21 @@ public class Selection {
 		Fight.setVisible(true);
 		Load.setVisible(false);
 		NoLoad.setVisible(false);
-		Player p1 = new Player();
-		Player p2 = new Player();
-		while (true) {
-			actionSelection(p1, p2);
-		}
+		// while (true) {
+		// actionSelection(p1, p2);
+		// }
 	}
 
 	@FXML
 	protected void handleFightButton(ActionEvent event) {
 		// Kampf ausgewählt
+		// new Fight(p1, p2);
+		Back.setDisable(false);
+		Items.setVisible(false);
+		Escape.setVisible(false);
+		Thonkemon.setVisible(false);
+		Fight.setVisible(false);
+		// open attack screen
 	}
 
 	@FXML
@@ -79,37 +126,26 @@ public class Selection {
 
 	@FXML
 	protected void handleThonkemonButton(ActionEvent event) {
-
+		// new TeamManagement(p1, p2);
+		Items.setVisible(false);
+		Escape.setVisible(false);
+		Thonkemon.setVisible(false);
+		Fight.setVisible(false);
+		// open team selection buttons
 	}
 
-	public static void actionSelection(Player p1, Player p2) {
-		System.out.println("Select: ");
-		System.out.println("Fight Team Random");
-		while (true) {
-			String s = StdIn.readString();
-			if (s.equals("Fight")) {
-				new Fight(p1, p2);
-				return;
-			} else if (s.equals("Team"))
-				new TeamManagement(p1, p2);
-			else if (s.equalsIgnoreCase("random")) {
-				System.out.println("Select Player: ");
-				System.out.println(p1.name + " " + p2.name);
-				while (true) {
-					s = StdIn.readString();
-					if (p1.name.equals(s)) {
-						new Fight(p1);
-						return;
-					} else if (p2.name.equals(s)) {
-						new Fight(p2);
-						return;
-					} else
-						System.out.println("Wrong Input!");
-				}
-			} else
-				System.out.println("Wrong Input!");
-		}
-	}
+	/*
+	 * public static void actionSelection(Player p1, Player p2) {
+	 * System.out.println("Select: "); System.out.println("Fight Team Random");
+	 * while (true) { String s = StdIn.readString(); if (s.equals("Fight")) {
+	 * new Fight(p1, p2); return; } else if (s.equals("Team")) new
+	 * TeamManagement(p1, p2); else if (s.equalsIgnoreCase("random")) {
+	 * System.out.println("Select Player: "); System.out.println(p1.name + " " +
+	 * p2.name); while (true) { s = StdIn.readString(); if (p1.name.equals(s)) {
+	 * new Fight(p1); return; } else if (p2.name.equals(s)) { new Fight(p2);
+	 * return; } else System.out.println("Wrong Input!"); } } else
+	 * System.out.println("Wrong Input!"); } }
+	 */
 
 	public void setStage(Stage stage) {
 		primaryStage = stage;
