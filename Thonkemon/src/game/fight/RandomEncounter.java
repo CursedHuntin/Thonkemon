@@ -119,7 +119,7 @@ public class RandomEncounter extends Fight {
 	}
 
 	private void executeRandomMove(Player p, Monster m, Monster pm, Move randomMove) {
-		for (Move move : m.moves) {
+		for (Move move : m.fightMoves) {
 			if (move.name.equals(randomMove.name)) {
 				if (hit(move) && skipTurn != true) {
 					onMoveHitMonsterAttacking(m, p, pm, move);
@@ -255,7 +255,7 @@ public class RandomEncounter extends Fight {
 		return mon;
 	}
 
-	private List<Monster> createMonsters(int level) {
+	public static List<Monster> createMonsters(int level) {
 		List<Monster> monster = new ArrayList<Monster>();
 		monster.add(new Wotah(level));
 		monster.add(new Krato(level));

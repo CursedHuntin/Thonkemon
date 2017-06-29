@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.fight.RandomEncounter;
 import items.Item;
 import items.balls.Ball;
 import items.balls.MasterBall;
@@ -59,5 +60,21 @@ public class Player {
 	public List<Monster> addMonsterToTeam(List<Monster> team, Monster m) {
 		team.add(m);
 		return team;
+	}
+
+	private void selectStarter() {
+		System.out.println("Select your Starter: ");
+		boolean k = false;
+		while (!k) {
+			String s = StdIn.readString();
+			for (Monster m : RandomEncounter.createMonsters(1)) {
+				if (m.name.equalsIgnoreCase(s)) {
+					team.add(m);
+					k = true;
+				}
+			}
+			if (!k)
+				System.out.println("Wrong Input!");
+		}
 	}
 }

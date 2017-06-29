@@ -69,7 +69,7 @@ public class PlayerFight extends Fight {
 				selectItem(atkPlayer, atkPM);
 				k = true;
 			} else {
-				for (Move move : atkPM.moves) {
+				for (Move move : atkPM.fightMoves) {
 					if (move.name.equals(m)) {
 						executeMove(atkPlayer, defPlayer, atkPM, defPM, move);
 						k = true;
@@ -93,7 +93,9 @@ public class PlayerFight extends Fight {
 
 	private void printSelection(Monster atkPM) {
 		System.out.println("Select Move: ");
-		for (Move move : atkPM.moves) {
+		for (Move move : atkPM.fightMoves) {
+			if (move.equals(null))
+				System.out.println("null");
 			System.out.print(move.name + " ");
 		}
 		System.out.println("\r\nSwitch Item");

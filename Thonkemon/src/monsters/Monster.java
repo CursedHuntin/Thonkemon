@@ -1,6 +1,7 @@
 package monsters;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import game.StdIn;
@@ -16,7 +17,7 @@ public abstract class Monster {
 	public int[] initStats;
 	public Status status;
 	public Type[] types;
-	public static Move[] MoveArray = new Move[4];
+	public List<Move> fightMoves = new ArrayList<Move>();
 
 	public Monster(String name, Type[] types, int level, int[] stats) {
 		this.name = name;
@@ -27,48 +28,42 @@ public abstract class Monster {
 
 	abstract List<Move> getMoveset();
 
-	abstract List<Move> getMoves(int level);
+	void getMoves(int level) {
+		for (Move move : moveset) {
+			if (level >= move.level)
+				moves.add(move);
+		}
+		// setMoves();
+		Collections.reverse(moves);
+		int i = 0;
+		for (Move m : moves) {
+			if (i == 4)
+				break;
+			fightMoves.add(m);
+			i++;
+
+		}
+		Collections.reverse(moves);
+	}
 
 	public void setNickname(String name) {
 		this.name = name;
 	}
 
-	public static void setMoves(Monster m) {
+	public List<Move> setMoves() {
 		System.out.println("Select your Moves: ");
-		for (Move move : m.moves) {
+		for (Move move : this.moves) {
 			System.out.print(move.name + " ");
-		}
-		int i = 0;
-		boolean k;
-		while (i < 4 && i < m.moves.size()) {
-			k = false;
-			String s = StdIn.readString();
-			for (Move move : m.moves) {
-				if (move.name.equalsIgnoreCase(s)) {
-					for (int j = 0; j < 4; j++) {
-						if (MoveArray[j] != null) {
-							if (MoveArray[j].name.equalsIgnoreCase(s)) {
-								k = true;
-							}
-						}
-					}
-					if (!k) {
-						MoveArray[i] = move;
-						i++;
-					}
-				}
-
-			}
 		}
 
 		List<Move> fightMoves = new ArrayList<Move>();
 		int a = 0;
 		boolean b;
 
-		while (a < 4 && a < m.moves.size()) {
+		while (a < 4 && a < this.moves.size()) {
 			b = false;
 			String s = StdIn.readString();
-			for (Move move : m.moves) {
+			for (Move move : this.moves) {
 				if (move.name.equalsIgnoreCase(s)) {
 					for (Move x : fightMoves) {
 						if (x.name.equalsIgnoreCase(s))
@@ -77,9 +72,18 @@ public abstract class Monster {
 					if (!b) {
 						fightMoves.add(move);
 						a++;
+						System.out.println(move.name + " has been added!");
 					}
 				}
 			}
 		}
+		System.out.println(this.name + "'s new active Moves are: ");
+		for (Move mv : fightMoves) {
+			System.out.print(mv.name + " ");
+		}
+		System.out.println("");
+		return fightMoves;
 	}
+
+	public abstract void changeLevel(int level);
 }

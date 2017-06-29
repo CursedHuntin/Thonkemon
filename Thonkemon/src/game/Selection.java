@@ -5,7 +5,6 @@ import game.fight.RandomEncounter;
 
 public class Selection {
 	public Selection(Player p1, Player p2) {
-		// Monster.setMoves(p1.team.get(0));
 		while (true) {
 			actionSelection(p1, p2);
 		}
@@ -16,10 +15,10 @@ public class Selection {
 		System.out.println("Fight Team Random Heal");
 		while (true) {
 			String s = StdIn.readString();
-			if (s.equals("Fight")) {
+			if (s.equalsIgnoreCase("fight")) {
 				new PlayerFight(p1, p2);
 				return;
-			} else if (s.equals("Team"))
+			} else if (s.equalsIgnoreCase("team"))
 				new TeamManagement(p1, p2);
 			else if (s.equalsIgnoreCase("random")) {
 				System.out.println("Select Player: ");
