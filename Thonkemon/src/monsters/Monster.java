@@ -1,8 +1,10 @@
 package monsters;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import game.StdIn;
 import moves.Move;
 import statuses.Status;
 import types.Type;
@@ -15,16 +17,7 @@ public abstract class Monster {
 	public int[] initStats;
 	public Status status;
 	public Type[] types;
-
-	// public Monster(String name, Type type1, Type type2, int level, int maxHP,
-	// int atk, int def, int spAtk, int spDef,
-	// int init, int catchrate) {
-	//
-	// this.name = name;
-	// stats = new Stats(type1, type2, level, maxHP, atk, def, spAtk, spDef,
-	// init, catchrate);
-	//
-	// }
+	public List<Move> fightMoves = new ArrayList<Move>();
 
 	public Monster(String name, Type[] types, int level, int[] stats) {
 		this.name = name;
@@ -35,9 +28,62 @@ public abstract class Monster {
 
 	abstract List<Move> getMoveset();
 
-	abstract List<Move> getMoves(int level);
+	void getMoves(int level) {
+		for (Move move : moveset) {
+			if (level >= move.level)
+				moves.add(move);
+		}
+		// setMoves();
+		Collections.reverse(moves);
+		int i = 0;
+		for (Move m : moves) {
+			if (i == 4)
+				break;
+			fightMoves.add(m);
+			i++;
+
+		}
+		Collections.reverse(moves);
+	}
 
 	public void setNickname(String name) {
 		this.name = name;
 	}
+
+	public List<Move> setMoves() {
+		System.out.println("Select your Moves: ");
+		for (Move move : this.moves) {
+			System.out.print(move.name + " ");
+		}
+
+		List<Move> fightMoves = new ArrayList<Move>();
+		int a = 0;
+		boolean b;
+
+		while (a < 4 && a < this.moves.size()) {
+			b = false;
+			String s = StdIn.readString();
+			for (Move move : this.moves) {
+				if (move.name.equalsIgnoreCase(s)) {
+					for (Move x : fightMoves) {
+						if (x.name.equalsIgnoreCase(s))
+							b = true;
+					}
+					if (!b) {
+						fightMoves.add(move);
+						a++;
+						System.out.println(move.name + " has been added!");
+					}
+				}
+			}
+		}
+		System.out.println(this.name + "'s new active Moves are: ");
+		for (Move mv : fightMoves) {
+			System.out.print(mv.name + " ");
+		}
+		System.out.println("");
+		return fightMoves;
+	}
+
+	public abstract void changeLevel(int level);
 }

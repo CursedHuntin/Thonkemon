@@ -1,14 +1,17 @@
 package items.balls;
 
-public class Ball {
-	public String name;
+import items.Item;
+import monsters.Monster;
+
+public class Ball extends Item {
 	public int catchrate;
-	public int amount;
 
-	public Ball(String name, int catchrate, int amount) {
-		this.name = name;
+	public Ball(String name, int catchrate, int amount, int price) {
+		super(name, amount, price);
 		this.catchrate = catchrate;
-		this.amount = amount;
+	}
 
+	@Override
+	public void effect(Monster m) {
 	}
 }

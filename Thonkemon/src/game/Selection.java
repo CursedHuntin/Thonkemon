@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import game.fight.PlayerFight;
+import game.fight.RandomEncounter;
 
 public class Selection {
 
@@ -223,7 +225,7 @@ public class Selection {
 
 	@FXML
 	protected void handleFightButton(ActionEvent event) {
-		// Kampf ausgewählt
+		// Kampf ausgewï¿½hlt
 		// new Fight(p1, p2);
 		Back.setDisable(false);
 		Items.setVisible(false);

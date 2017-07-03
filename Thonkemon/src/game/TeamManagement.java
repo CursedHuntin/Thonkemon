@@ -51,7 +51,26 @@ public class TeamManagement {
 		}
 	}
 
-	private void preFightManagement(Player p) {
+	private void changeMoves(Player p) {
+		System.out.println("Select Monster: ");
+		for (Monster m : p.team) {
+			System.out.print(m.name + " ");
+		}
+		boolean k = false;
+		while (!k) {
+			String s = StdIn.readString();
+			for (Monster m : p.team) {
+				if (m.name.equalsIgnoreCase(s)) {
+					m.fightMoves = m.setMoves();
+					k = true;
+				}
+			}
+			if (!k)
+				System.out.println("Wrong Input!");
+		}
+	}
+
+	private void changeStarter(Player p) {
 		System.out.println("Select new Starting-Monster: ");
 		for (int i = 0; i < p.team.size(); i++) {
 			System.out.print(p.team.get(i).name + " ");
@@ -72,11 +91,35 @@ public class TeamManagement {
 		System.out.println(p.team.get(0).name + " is your new starter!\r\n");
 	}
 
+	private void preFightManagement(Player p) {
+		System.out.println("Select Action: ");
+		System.out.println("Switch Moves");
+
+		while (true) {
+			String s = StdIn.readString();
+			if (s.equalsIgnoreCase("switch")) {
+				changeStarter(p);
+				return;
+			} else if (s.equalsIgnoreCase("moves")) {
+				changeMoves(p);
+				return;
+			}
+			System.out.println("Wrong Input!");
+		}
+	}
+
 	public static void swap(Player p, String s) {
 		for (int i = 0; i < p.team.size(); i++) {
 			if (p.team.get(i).name.equals(s)) {
 				Collections.swap(p.team, 0, i);
 			}
 		}
+	}
+
+	static void Heal(Player p) {
+		for (Monster m : p.team) {
+			m.stats.setHp(m.stats.getMaxHp());
+		}
+		System.out.println(p.name + "'s Team has been healed!\r\n");
 	}
 }

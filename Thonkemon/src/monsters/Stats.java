@@ -16,24 +16,6 @@ public class Stats {
 	private double init;
 	private int catchrate;
 
-	// public Stats(Type type1, Type type2, int level, int maxHP, int atk, int
-	// def, int spAtk, int spDef, double init,
-	// int catchrate) {
-	//
-	// setType1(type1);
-	// setType2(type2);
-	// setLevel(level);
-	// setMaxHp((int) (maxHP + ((maxHP / 1.5) * (level / 5))));
-	// setAtk(atk + (atk * (level / 5)));
-	// setDef(def + (def * (level / 5)));
-	// setSpAtk(spAtk + (spAtk * (level / 5)));
-	// setSpDef(spDef + (spDef * (level / 5)));
-	// setInit(init + ((init / 5) * ((level / 5) + 1)));
-	// setCatchrate(catchrate);
-	// setHp(this.maxHP);
-	//
-	// }
-
 	public Stats(Type[] types, int level, int[] stats) {
 		setType1(types[0]);
 		setType2(types[1]);
@@ -73,7 +55,7 @@ public class Stats {
 	}
 
 	public int getMaxHp() {
-		return hp;
+		return maxHP;
 	}
 
 	public void setMaxHp(int maxHP) {

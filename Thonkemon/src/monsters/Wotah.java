@@ -7,19 +7,20 @@ import moves.Heal;
 import moves.Move;
 import moves.Tackle;
 import moves.Watergun;
+import types.None;
 import types.Type;
 import types.Water;
 
 public class Wotah extends Monster {
 	public static String name = "Wotah";
-	public static Type[] types = { new Water(), null };
+	public static Type[] types = { new Water(), new None() };
 	// hp, atk, def, spatk, spdef, init, catchrate
 	public static int[] stats = { 19, 7, 6, 8, 7, 8, 60 };
 
 	public Wotah(int level) {
 		super(name, types, level, stats);
-		super.moveset = getMoveset();
-		super.moves = getMoves(level);
+		moveset = getMoveset();
+		getMoves(level);
 	}
 
 	public List<Move> getMoveset() {
@@ -30,11 +31,8 @@ public class Wotah extends Monster {
 		return m;
 	}
 
-	public List<Move> getMoves(int level) {
-		for (Move move : super.moveset) {
-			if (level >= move.level)
-				moves.add(move);
-		}
-		return moves;
+	@Override
+	public void changeLevel(int level) {
+		super.stats = new Stats(types, level, stats);
 	}
 }

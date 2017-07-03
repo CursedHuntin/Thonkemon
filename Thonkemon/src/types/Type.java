@@ -12,15 +12,13 @@ public class Type {
 
 	public Type(String name) {
 		this.name = name;
-
 	}
 
 	public static double getSTAB(Type atkType, Monster m) {
 		double mult = 1;
-		if (atkType.name.equals(m.stats.getType1().name))
-			mult += 0.5;
-		if (m.stats.getType2() != null) {
-			if (atkType.name.equals(m.stats.getType2().name))
+
+		for (Type t : m.types) {
+			if (atkType.name.equals(t.name))
 				mult += 0.5;
 		}
 		return mult;
@@ -28,28 +26,20 @@ public class Type {
 
 	public static double getMult(Type atkType, Monster m) {
 		double mult = 1;
-		for (String type : m.stats.getType1().weakness) {
-			if (atkType.name.equals(type))
-				mult *= 2;
-		}
-		if (m.stats.getType2() != null) {
-			for (String type : m.stats.getType2().weakness) {
+
+		for (Type t : m.types) {
+			for (String type : t.weakness) {
 				if (atkType.name.equals(type))
 					mult *= 2;
 			}
 		}
 
-		for (String type : m.stats.getType1().strength) {
-			if (atkType.name.equals(type))
-				mult /= 2;
-		}
-		if (m.stats.getType2() != null) {
-			for (String type : m.stats.getType2().strength) {
+		for (Type t : m.types) {
+			for (String type : t.strength) {
 				if (atkType.name.equals(type))
 					mult /= 2;
 			}
 		}
 		return mult;
-
 	}
 }
