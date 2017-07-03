@@ -8,7 +8,11 @@ public class TeamManagement {
 
 	public TeamManagement(Player p1, Player p2) {
 		preFightManagement(selectPlayer(p1, p2));
-		new Selection(p1, p2);
+		while (true) {
+			// Selection.actionSelection(p1, p2);
+			// restart buttn set
+		}
+		// new Selection(p1, p2);// achtung
 	}
 
 	public static Monster selectNewMonster(Player p) {

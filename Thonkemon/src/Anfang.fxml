@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+ 
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" 
+xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.Selection">
+   <children>
+   
+   <ListView visible="false" fx:id="lv" layoutX="15.0" layoutY="50.0" prefHeight="420.0" prefWidth="305.0" />
+   <Button visible= "false" fx:id="ItemsSele" layoutX="350.0" layoutY="120.0" prefHeight="80.0" prefWidth="200.0" mnemonicParsing="false" 
+      	onAction="#handleItemsSeleButton" text="Select"/>
+   <Button visible= "false" fx:id="ItemsBack" layoutX="350.0" layoutY="220.0" prefHeight="80.0" prefWidth="200.0" mnemonicParsing="false" 
+      	onAction="#handleItemsBackButton" text="Back" />
+   
+   <Button visible= "false" fx:id="A1" layoutX="50.0" layoutY="370.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleA1Button" text="A1"/>
+      	<Button visible= "false" fx:id="A2" layoutX="520.0" layoutY="370.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleA2Button" text="A2"/>
+      	<Button visible= "false" fx:id="A3" layoutX="520.0" layoutY="470.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleA3Button" text="A3"/>
+      	<Button visible= "false" fx:id="A4" layoutX="50.0" layoutY="470.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleA4Button" text="A4"/>
+      	<Button visible= "false" fx:id="Back" layoutX="50.0" layoutY="570.0" prefHeight="50.0" prefWidth="870.0" mnemonicParsing="false" 
+      	onAction="#handleBackButton" text="Back"/>
+   
+   		<Button visible= "true" fx:id="Load" layoutX="100.0" layoutY="80.0" prefHeight="200.0" prefWidth="200.0" mnemonicParsing="false" 
+      	onAction="#handleLoadButton" text="Spielstand Laden" />
+      	<Button visible= "true" fx:id="NoLoad" layoutX="700.0" layoutY="80.0" prefHeight="200.0" prefWidth="200.0" mnemonicParsing="false" 
+      	onAction="#handleNoLoadButton" text="Neues Spiel" />
+      	
+      	<Button visible= "false" fx:id="Fight" layoutX="50.0" layoutY="420.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleFightButton" text="Fight"/>
+      	<Button visible= "false" fx:id="Escape" layoutX="520.0" layoutY="520.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleEscapeButton" text="Escape"/>
+      	<Button visible= "false" fx:id="Items" layoutX="520.0" layoutY="420.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleItemsButton" text="Items"/>
+      	<Button visible= "false" fx:id="Thonkemon" layoutX="50.0" layoutY="520.0" prefHeight="80.0" prefWidth="400.0" mnemonicParsing="false" 
+      	onAction="#handleThonkemonButton" text="Thonkemon" />
+      	
+      	
+      	
+      	
+      </children>
+</Pane>
