@@ -5,7 +5,7 @@ import monsters.Monster;
 public class MediumHealthPotion extends Potion {
 
 	public MediumHealthPotion(int amount) {
-		super("MediumHealthPotion", amount);
+		super("MediumHealthPotion", amount, 500);
 	}
 
 	@Override

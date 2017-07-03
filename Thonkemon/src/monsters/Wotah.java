@@ -19,8 +19,8 @@ public class Wotah extends Monster {
 
 	public Wotah(int level) {
 		super(name, types, level, stats);
-		super.moveset = getMoveset();
-		super.moves = getMoves(level);
+		moveset = getMoveset();
+		getMoves(level);
 	}
 
 	public List<Move> getMoveset() {
@@ -31,11 +31,8 @@ public class Wotah extends Monster {
 		return m;
 	}
 
-	public List<Move> getMoves(int level) {
-		for (Move move : super.moveset) {
-			if (level >= move.level)
-				moves.add(move);
-		}
-		return moves;
+	@Override
+	public void changeLevel(int level) {
+		super.stats = new Stats(types, level, stats);
 	}
 }

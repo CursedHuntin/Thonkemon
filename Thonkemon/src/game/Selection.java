@@ -15,10 +15,10 @@ public class Selection {
 		System.out.println("Fight Team Random Heal");
 		while (true) {
 			String s = StdIn.readString();
-			if (s.equals("Fight")) {
+			if (s.equalsIgnoreCase("fight")) {
 				new PlayerFight(p1, p2);
 				return;
-			} else if (s.equals("Team"))
+			} else if (s.equalsIgnoreCase("team"))
 				new TeamManagement(p1, p2);
 			else if (s.equalsIgnoreCase("random")) {
 				System.out.println("Select Player: ");
