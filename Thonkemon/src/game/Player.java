@@ -16,8 +16,10 @@ import monsters.Wotah;
 public class Player {
 	public String name;
 	public List<Monster> team = new ArrayList<Monster>();
+	public List<Monster> box = new ArrayList<Monster>();
 	public List<Item> items = new ArrayList<Item>();
 	public List<Ball> balls = new ArrayList<Ball>();
+	public int money = 0;
 
 	public Player() {
 		this.name = getName();
@@ -76,5 +78,9 @@ public class Player {
 			if (!k)
 				System.out.println("Wrong Input!");
 		}
+	}
+
+	private void manageBox() {
+
 	}
 }
