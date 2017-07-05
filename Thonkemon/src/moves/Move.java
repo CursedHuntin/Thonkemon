@@ -1,10 +1,12 @@
 package moves;
 
+import java.io.Serializable;
+
 import statuses.Status;
 import types.Type;
 
-public class Move {
-
+public class Move implements Serializable {
+	private static final long serialVersionUID = -5033230559369105031L;
 	public String name;
 	public Type type;
 	public Type damageType;

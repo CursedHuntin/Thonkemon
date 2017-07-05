@@ -1,11 +1,13 @@
 package types;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import monsters.Monster;
 
-public class Type {
+public class Type implements Serializable {
+	private static final long serialVersionUID = -2760281175438773945L;
 	public String name;
 	public List<String> weakness = new ArrayList<String>();
 	public List<String> strength = new ArrayList<String>();

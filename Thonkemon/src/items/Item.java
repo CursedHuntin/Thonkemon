@@ -1,8 +1,11 @@
 package items;
 
+import java.io.Serializable;
+
 import monsters.Monster;
 
-public abstract class Item {
+public abstract class Item implements Serializable {
+	private static final long serialVersionUID = 2520068126446404262L;
 	public String name;
 	public int amount;
 	public int price;

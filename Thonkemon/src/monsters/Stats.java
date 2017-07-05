@@ -1,9 +1,11 @@
 package monsters;
 
+import java.io.Serializable;
+
 import types.Type;
 
-public class Stats {
-
+public class Stats implements Serializable {
+	private static final long serialVersionUID = -481507815548710437L;
 	private Type type1;
 	private Type type2;
 	private int level;

@@ -13,20 +13,22 @@ public class TeamManagement {
 
 	public static Monster selectNewMonster(Player p) {
 		System.out.println("Select new Monster: ");
-		for (int i = 0; i < p.team.size(); i++) {
+		for (int i = 1; i < p.team.size(); i++) {
 			if (p.team.get(i).stats.getHp() > 0)
 				System.out.print(p.team.get(i).name + " ");
 		}
-		System.out.println("");
+		System.out.println(" Back");
 		boolean k = false;
 		while (!k) {
 			String s = StdIn.readString();
-			for (int i = 0; i < p.team.size(); i++) {
+			for (int i = 1; i < p.team.size(); i++) {
 				if (p.team.get(i).name.equals(s) && p.team.get(i).stats.getHp() > 0) {
 					Collections.swap(p.team, 0, i);
 					k = true;
 				}
 			}
+			if (s.equalsIgnoreCase("back"))
+				k = true;
 			if (!k)
 				System.out.println("Wrong Input!");
 		}
@@ -68,19 +70,21 @@ public class TeamManagement {
 
 	private void changeStarter(Player p) {
 		System.out.println("Select new Starting-Monster: ");
-		for (int i = 0; i < p.team.size(); i++) {
+		for (int i = 1; i < p.team.size(); i++) {
 			System.out.print(p.team.get(i).name + " ");
 		}
-		System.out.println("");
+		System.out.println("Back");
 		boolean k = false;
 		while (!k) {
 			String s = StdIn.readString();
-			for (int i = 0; i < p.team.size(); i++) {
+			for (int i = 1; i < p.team.size(); i++) {
 				if (p.team.get(i).name.equals(s)) {
 					Collections.swap(p.team, 0, i);
 					k = true;
 				}
 			}
+			if (s.equalsIgnoreCase("back"))
+				k = true;
 			if (!k)
 				System.out.println("Wrong Input!");
 		}

@@ -1,5 +1,6 @@
 package game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,8 @@ import monsters.Krato;
 import monsters.Monster;
 import monsters.Wotah;
 
-public class Player {
+public class Player implements Serializable {
+	private static final long serialVersionUID = 5007816868968013693L;
 	public String name;
 	public List<Monster> team = new ArrayList<Monster>();
 	public List<Monster> box = new ArrayList<Monster>();
@@ -80,7 +82,26 @@ public class Player {
 		}
 	}
 
-	private void manageBox() {
-
+	void manageBox() {
+		System.out.println("Select the Monster you want to deposit: ");
+		for (Monster m : team) {
+			System.out.print(m.name + " ");
+		}
+		System.out.println("Back");
+		while (true) {
+			String s = StdIn.readString();
+			for (Monster m : team) {
+				if (m.name.equalsIgnoreCase(s)) {
+					box.add(m);
+					team.remove(m);
+					System.out.println(m.name + " has been deposited in your box!");
+					for (Monster l : box) {
+						System.out.println(l.name);
+					}
+					return;
+				} else if (s.equalsIgnoreCase("back"))
+					return;
+			}
+		}
 	}
 }

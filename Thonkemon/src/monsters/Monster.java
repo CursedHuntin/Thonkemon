@@ -1,5 +1,6 @@
 package monsters;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,7 +10,8 @@ import moves.Move;
 import statuses.Status;
 import types.Type;
 
-public abstract class Monster {
+public abstract class Monster implements Serializable {
+	private static final long serialVersionUID = -4967621942093163953L;
 	public String name;
 	public List<Move> moveset = new ArrayList<Move>();
 	public List<Move> moves = new ArrayList<Move>();
