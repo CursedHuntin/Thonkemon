@@ -16,7 +16,6 @@ public class Selection {
 	public Selection(Player p1, Player p2) {
 		this.p1 = p1;
 		this.p2 = p2;
-		System.out.println(p1);
 		while (true) {
 			actionSelection(p1, p2);
 		}
@@ -25,7 +24,7 @@ public class Selection {
 	public Selection() {
 		p1 = load();
 		while (true)
-			actionSelection(p1, new Player());
+			actionSelection(p1, new Player("Player 2"));
 	}
 
 	private void actionSelection(Player p1, Player p2) {

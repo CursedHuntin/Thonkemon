@@ -10,7 +10,7 @@ public class Startup {
 			if (s.equalsIgnoreCase("load")) {
 				new Selection();
 			} else if (s.equalsIgnoreCase("new"))
-				new Selection(new Player(), new Player());
+				new Selection(new Player(), new Player("Player 2"));
 		}
 
 		// new Fight(new Player());
