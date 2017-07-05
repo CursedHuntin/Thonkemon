@@ -5,13 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 import game.fight.PlayerFight;
 import game.fight.RandomEncounter;
 
-public class Selection implements Serializable {
-	private static final long serialVersionUID = 8717791949705931832L;
+public class Selection {
 	Player p1;
 	Player p2;
 
@@ -25,10 +23,9 @@ public class Selection implements Serializable {
 	}
 
 	public Selection() {
-		load();
-		System.out.println(p1);
+		p1 = load();
 		while (true)
-			actionSelection(p1, p2);
+			actionSelection(p1, new Player());
 	}
 
 	private void actionSelection(Player p1, Player p2) {
@@ -98,8 +95,8 @@ public class Selection implements Serializable {
 		try {
 			FileOutputStream saveFile = new FileOutputStream("saveFile.sav");
 			ObjectOutputStream save = new ObjectOutputStream(saveFile);
-			System.out.println(this.toString());
-			save.writeObject(this);
+			System.out.println(p1.toString());
+			save.writeObject(p1);
 			save.close();
 
 		} catch (IOException e) {
@@ -107,13 +104,13 @@ public class Selection implements Serializable {
 		}
 	}
 
-	private Selection load() {
+	private Player load() {
 		try {
 			FileInputStream saveFile = new FileInputStream("saveFile.sav");
 			ObjectInputStream restore = new ObjectInputStream(saveFile);
-			Selection sel = (Selection) restore.readObject();
+			Player p = (Player) restore.readObject();
 			restore.close();
-			return sel;
+			return p;
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
