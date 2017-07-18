@@ -15,7 +15,7 @@ public class Buhrn extends Monster {
 	public static String name = "Buhrn";
 	public static Type[] types = { new Fire(), new None() };
 	// hp, atk, def, spatk, spdef, init, catchrate
-	public static int[] stats = { 22, 2, 5, 10, 6, 10, 60 };
+	public static int[] stats = { 22, 2, 5, 10, 6, 10, 60, 80 };
 
 	public Buhrn(int level) {
 		super(name, types, level, stats);

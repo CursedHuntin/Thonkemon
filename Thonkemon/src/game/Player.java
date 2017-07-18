@@ -21,7 +21,7 @@ public class Player implements Serializable {
 	public List<Monster> box = new ArrayList<Monster>();
 	public List<Item> items = new ArrayList<Item>();
 	public List<Ball> balls = new ArrayList<Ball>();
-	public int money = 0;
+	public int money = 1000;
 
 	public Player() {
 		this.name = getName();

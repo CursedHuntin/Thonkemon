@@ -40,7 +40,7 @@ public class RandomEncounter extends Fight {
 				return;
 			else {
 				System.out.println(m.name + " fainted.");
-				System.out.println(p.name + " wins.");
+				new Leveling(pm, m);
 				return;
 			}
 		}
@@ -66,7 +66,7 @@ public class RandomEncounter extends Fight {
 			System.out.println(p.name + "'s turn!");
 			printSelectionOnEncounter(pm);
 			boolean k = false;
-			while (k != true) {
+			while (!k) {
 				String s = StdIn.readString();
 				if (s.equalsIgnoreCase("switch")) {
 					pm = selectNewMonster(p, pm);
@@ -82,8 +82,10 @@ public class RandomEncounter extends Fight {
 					if (catchMon(p, m, b)) {
 						monCought(p, m);
 						return;
-					} else
+					} else {
 						System.out.println(m.name + " managed to escape!");
+						k = true;
+					}
 
 				} else {
 					for (Move move : pm.moves) {

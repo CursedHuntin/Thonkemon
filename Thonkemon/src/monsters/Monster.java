@@ -20,6 +20,7 @@ public abstract class Monster implements Serializable {
 	public Status status;
 	public Type[] types;
 	public List<Move> fightMoves = new ArrayList<Move>();
+	public int exp;
 
 	public Monster(String name, Type[] types, int level, int[] stats) {
 		this.name = name;

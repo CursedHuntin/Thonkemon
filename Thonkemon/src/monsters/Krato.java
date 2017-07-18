@@ -17,7 +17,7 @@ public class Krato extends Monster {
 	public static String name = "Krato";
 	public static Type[] types = { new Fighting(), new None() };
 	// hp, atk, def, spatk, spdef, init, catchrate
-	public static int[] stats = { 25, 10, 5, 1, 3, 7, 80 };
+	public static int[] stats = { 25, 10, 5, 1, 3, 7, 80, 75 };
 
 	public Krato(int level) {
 		super(name, types, level, stats);

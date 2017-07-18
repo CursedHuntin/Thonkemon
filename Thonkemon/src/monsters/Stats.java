@@ -9,6 +9,7 @@ public class Stats implements Serializable {
 	private Type type1;
 	private Type type2;
 	private int level;
+	private int exp;
 	private int maxHP;
 	private int hp;
 	private int atk;
@@ -17,6 +18,7 @@ public class Stats implements Serializable {
 	private int spDef;
 	private double init;
 	private int catchrate;
+	private int killExp;
 
 	public Stats(Type[] types, int level, int[] stats) {
 		setType1(types[0]);
@@ -29,7 +31,17 @@ public class Stats implements Serializable {
 		setSpDef(stats[4] + (stats[4] * (level / 5)));
 		setInit(stats[5] + ((stats[5] / 5) * ((level / 5) + 1)));
 		setCatchrate(stats[6]);
+		setExp(0);
+		killExp = stats[7] * (level / 5);
 		setHp(this.maxHP);
+	}
+
+	public int getKillExp() {
+		return killExp;
+	}
+
+	public int getExp() {
+		return exp;
 	}
 
 	public Type getType1() {
@@ -120,4 +132,7 @@ public class Stats implements Serializable {
 		this.catchrate = catchrate;
 	}
 
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
 }

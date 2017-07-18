@@ -17,19 +17,20 @@ public class Selection {
 		this.p1 = p1;
 		this.p2 = p2;
 		while (true) {
-			actionSelection(p1, p2);
+			actionSelection();
 		}
 	}
 
 	public Selection() {
 		p1 = load();
+		p2 = new Player("Player 2");
 		while (true)
-			actionSelection(p1, new Player("Player 2"));
+			actionSelection();
 	}
 
-	private void actionSelection(Player p1, Player p2) {
+	private void actionSelection() {
 		System.out.println("Select: ");
-		System.out.println("Fight Team Box Random Heal Save");
+		System.out.println("Fight Team Box Random Heal Store Save");
 		while (true) {
 			String s = StdIn.readString();
 			if (s.equalsIgnoreCase("fight")) {
@@ -83,8 +84,12 @@ public class Selection {
 					else
 						System.out.println("Wrong Input!");
 				}
+			} else if (s.equalsIgnoreCase("store")) {
+				new Store(p1);
+				return;
 			} else if (s.equalsIgnoreCase("save")) {
 				save();
+				return;
 			} else
 				System.out.println("Wrong Input!");
 		}
@@ -94,7 +99,7 @@ public class Selection {
 		try {
 			FileOutputStream saveFile = new FileOutputStream("saveFile.sav");
 			ObjectOutputStream save = new ObjectOutputStream(saveFile);
-			System.out.println(p1.toString());
+			System.out.println(p1.name);
 			save.writeObject(p1);
 			save.close();
 
